@@ -15,7 +15,7 @@
 ##  along with this program; if not, write to the Free Software
 ##  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 
-##  $Id: htmlProtocol.r,v 1.16 2005/02/02 12:38:20 kjuen Exp $
+##  $Id: htmlProtocol.r,v 1.18 2005/12/12 09:32:17 burger Exp $
 
 printHTMLProtocol <- function(testData,
                               fileName = "",
@@ -419,11 +419,32 @@ printHTMLProtocol <- function(testData,
 
 
   ver <- cbind(unlist(version))
-  colnames(ver) <- ""
-  pr("\n\n --------------------------------\n")
-  write.table(ver, sep="\t", quote=FALSE, append=TRUE,
-              col.names=FALSE, file=fileName)
+  
+  ##  add host name
+  ver <- rbind(ver, Sys.info()["nodename"])
+  rownames(ver)[dim(ver)[1]] <- "host"
+  colnames(ver) <- "Value"
 
+  ##  compiler
+  rhome <- Sys.getenv("R_HOME")
+  makeconfFile <- file.path(rhome, "etc", "Makeconf")
+  
+  gccVersion <- system(paste("cat ", makeconfFile," | grep  \"^CXX =\" "),
+                       intern=TRUE)
+  gccVersion <- sub("^CXX[ ]* =[ ]*", "", gccVersion)
+
+  if (length(gccVersion) > 0) {
+    ver <- rbind(ver, gccVersion)
+    rownames(ver)[dim(ver)[1]] <- "gcc"
+  }
+  
+  writeHtmlTable(ver,
+                 htmlFile=fileName,
+                 border=0,
+                 width="80%",
+                 append=TRUE)
+  
+  
   ## finish html document
   writeHtmlEnd(htmlFile=fileName)
 }
