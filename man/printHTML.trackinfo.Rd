@@ -1,6 +1,3 @@
-%%
-%% $Id: printHTML.trackinfo.Rd,v 1.5 2004/06/08 07:24:07 burger Exp $
-%%
 \name{printHTML.trackInfo}
 \alias{printHTML.trackInfo}
 \title{Write HTML pages of the tracking result.}
@@ -33,7 +30,7 @@
   become clearly visible.
 }
 
-\authors{Thomas K\"onig, Klaus J\"unemann \& Matthias Burger}
+\author{Thomas K\"onig, Klaus J\"unemann \& Matthias Burger}
 
 \examples{
 

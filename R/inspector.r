@@ -15,10 +15,7 @@
 ##  along with this program; if not, write to the Free Software
 ##  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 
-##  $Id: inspector.r,v 1.3 2004/06/03 14:54:38 burger Exp $
-
-library(methods)
-library("splines")
+##  $Id: inspector.r,v 1.4 2004/09/22 13:23:00 burger Exp $
 
 
 includeTracker <- function(fbody)

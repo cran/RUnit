@@ -1,6 +1,3 @@
-%%
-%% $Id: RUnit-internal.Rd,v 1.3 2004/06/03 14:50:11 burger Exp $
-%%
 \name{RUnit-internal}
 
 \alias{includeTracker}

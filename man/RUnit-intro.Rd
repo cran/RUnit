@@ -1,8 +1,3 @@
-##
-##  
-##   $Id: RUnit-intro.Rd,v 1.1 2004/06/08 07:27:22 burger Exp $
-##
-##
 \name{RUnit}
 \alias{RUnit}
 \title{RUnit - Package Description}

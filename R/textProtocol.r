@@ -15,7 +15,7 @@
 ##  along with this program; if not, write to the Free Software
 ##  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 
-##  $Id: textProtocol.r,v 1.7 2004/06/02 16:53:23 burger Exp $
+##  $Id: textProtocol.r,v 1.10 2004/09/09 10:21:22 kjuen Exp $
 
 printTextProtocol <- function(testData,
                               fileName = "",
@@ -35,7 +35,7 @@ printTextProtocol <- function(testData,
   ##@in  showDetails         : [logical] if TRUE (default) add detailed trackbacks for each error incurred
   ##@in  traceBackCutOff     : [integer] number of steps back in the trace back stack to display
 
-    ##  preconditions
+  ##  preconditions
   if (!is(testData, "RUnitTestData"))
   {
     stop("Argument 'testData' must be of class 'RUnitTestData'.")
@@ -49,7 +49,7 @@ printTextProtocol <- function(testData,
   {
     stop("Argument 'fileName' must contain exactly one element.")
   }
-  
+
   if (!is.logical(separateFailureList))
   {
     stop("Argument 'separateFailureList' has to be of type logical.")
@@ -67,7 +67,7 @@ printTextProtocol <- function(testData,
   {
     stop("Argument 'showDetails' must contain exactly one element.")
   }
-  
+
   if (!is.numeric(traceBackCutOff))
   {
     stop("Argument 'traceBackCutOff' has to be of type logical.")
@@ -81,7 +81,7 @@ printTextProtocol <- function(testData,
     stop("Argument 'traceBackCutOff' out of valid range [0, 100].")
   }
 
-  
+
   ## just a convenience function
   pr <- function(..., sep=" ", nl=TRUE) {
     if(nl) {
@@ -93,9 +93,11 @@ printTextProtocol <- function(testData,
   }
 
   ## get singular or plural right
-  sop <- function(number, word, plext="s") ifelse(number == 1, paste(number, word),
-                                  paste(number, paste(word, plext, sep="")))
-
+  sop <- function(number, word, plext="s")
+  {
+    ifelse(number == 1, paste(number, word),
+           paste(number, paste(word, plext, sep="")))
+  }
 
   ## header part
   cat("RUNIT TEST PROTOCOL --", date(), "\n", file = fileName)
@@ -105,8 +107,11 @@ printTextProtocol <- function(testData,
     return()
   }
 
-  errInfo <- .getErrors(testData)
+  errInfo <- getErrors(testData)
   pr("Number of test functions:", errInfo$nTestFunc)
+  if(errInfo$nDeactivated > 0) {
+    pr("Number of deactivated test functions:", errInfo$nDeactivated)
+  }
   pr("Number of errors:", errInfo$nErr)
   pr("Number of failures:", errInfo$nFail, "\n\n")
 
@@ -128,6 +133,10 @@ printTextProtocol <- function(testData,
           }
           else if(funcList$kind == "failure") {
             pr("FAILURE in ", testFuncNames[j], ": ", funcList$msg,
+               sep="", nl=FALSE)
+          }
+          else if(funcList$kind == "deactivated") {
+            pr("DEACTIVATED ", testFuncNames[j], ": ", funcList$msg,
                sep="", nl=FALSE)
           }
         }
@@ -187,7 +196,10 @@ printTextProtocol <- function(testData,
                   pr(testFuncName, ": ERROR !! ", sep="")
                 }
                 else if (testFuncInfo$kind == "failure") {
-                  pr(testFuncName, ": FAILURE !! (check number ", testFuncInfo$checkNo, ")", sep="")
+                  pr(testFuncName, ": FAILURE !! (check number ", testFuncInfo$checkNum, ")", sep="")
+                }
+                else if (testFuncInfo$kind == "deactivated") {
+                  pr(testFuncName, ": DEACTIVATED, ", nl=FALSE)
                 }
                 else {
                   pr(testFuncName, ": unknown error kind", sep="")
@@ -225,8 +237,11 @@ print.RUnitTestData <- function(x, ...)
   ##
   ##@in  x : [RUnitTestData] S3 class object
 
-  errInfo <- .getErrors(x)
+  errInfo <- getErrors(x)
   cat("Number of test functions:", errInfo$nTestFunc, "\n")
+  if(errInfo$nDeactivated > 0) {
+    cat("Number of deactivated test functions:", errInfo$nDeactivated, "\n")
+  }
   cat("Number of errors:", errInfo$nErr, "\n")
   cat("Number of failures:", errInfo$nFail, "\n")
 }

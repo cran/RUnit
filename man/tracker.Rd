@@ -1,6 +1,3 @@
-%%
-%% $Id: tracker.Rd,v 1.7 2004/06/08 07:24:07 burger Exp $
-%%
 \name{tracker}
 \alias{tracker}
 
@@ -34,7 +31,7 @@
   \item{funcCall}{The declaration of the function.}
 }
 
-\authors{Thomas K\"onig, Klaus J\"unemann \& Matthias Burger}
+\author{Thomas K\"onig, Klaus J\"unemann \& Matthias Burger}
 
 \seealso{
   \code{\link{inspect}} for the registration of functions \& methods to

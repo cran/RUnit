@@ -15,7 +15,7 @@
 ##  along with this program; if not, write to the Free Software
 ##  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 
-##  $Id: runit.r,v 1.12 2004/05/27 09:37:58 koenig Exp $
+##  $Id: runit.r,v 1.14 2004/09/07 15:28:55 kjuen Exp $
 
 defineTestSuite <- function(name, dirs, testFileRegexp="^runit.+\\.r$", testFuncRegexp="^test.+")
 {
@@ -87,16 +87,17 @@ isValidTestSuite <- function(testSuite)
   ##@edescr
   ##@in  funcName : [character] name of test case function
 
+  ##  write to stdout for logging
+
+
   func <- get(funcName, envir=envir)
   ## anything else than a function is ignored.
   if(mode(func) != "function") {
+##     cat("\n ", funcName," is not of mode function. skipped.\n")
     return()
   }
 
-
-  ## reset book keeping variables in .testLogger
-  .testLogger$isFailure <<- FALSE
-  .testLogger$checkNo <<- 0
+  cat("\n\nExecuting test function",funcName," ... ")
 
   ## safe execution of setup function
   res <- try(setUpFunc())
@@ -107,16 +108,21 @@ isValidTestSuite <- function(testSuite)
     return()
   }
 
+  ## reset book keeping variables in .testLogger
+  .testLogger$cleanup()
   ## ordinary test function execution:
   timing <- try(system.time(func()))
   if (inherits(timing, "try-error")) {
-    if(.testLogger$isFailure) {
+    if(.testLogger$isFailure()) {
       .testLogger$addFailure(testFuncName=funcName,
-                             failureMsg=geterrmessage(),
-                             checkNum = .testLogger$checkNo)
+                             failureMsg=geterrmessage())
+    }
+    else if(.testLogger$isDeactivated()) {
+      .testLogger$addDeactivated(testFuncName=funcName)
     }
     else {
-      .testLogger$addError(testFuncName=funcName, errorMsg=geterrmessage())
+      .testLogger$addError(testFuncName=funcName,
+                           errorMsg=geterrmessage())
     }
   }
   else {
@@ -132,8 +138,10 @@ isValidTestSuite <- function(testSuite)
     return()
   }
 
+  cat(" done successfully.\n\n")
   return()
 }
+
 
 .sourceTestFile <- function(absTestFileName, testFuncRegexp)
 {
@@ -181,7 +189,7 @@ runTestSuite <- function(testSuites, useOwnErrorHandler=TRUE) {
   ##@edescr
   ##
   ##@in  testSuites     : [list] list of test suite lists
-  ##@in  useOwnErrorHandler : [logical] TRUE (default) : use the runit error handler 
+  ##@in  useOwnErrorHandler : [logical] TRUE (default) : use the runit error handler
   ##@ret                :
 
   oldErrorHandler <- getOption("error")
