@@ -1,5 +1,5 @@
 ##  RUnit : A unit test framework for the R programming language
-##  Copyright (C) 2003, 2004  Thomas Koenig, Matthias Burger, Klaus Juenemann
+##  Copyright (C) 2003, 2004, 2005  Thomas Koenig, Matthias Burger, Klaus Juenemann
 ##
 ##  This program is free software; you can redistribute it and/or modify
 ##  it under the terms of the GNU General Public License as published by
@@ -15,10 +15,10 @@
 ##  along with this program; if not, write to the Free Software
 ##  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 ##
-##  $Id: runitRUnit.r,v 1.2 2004/06/03 11:59:13 burger Exp $
+##  $Id: runitRUnit.r,v 1.4 2005/04/07 14:04:09 burger Exp $
 
 
-cat("\n\nRUnit test cases for 'RUnit' functions\n\n")
+cat("\n\nRUnit test cases for 'RUnit:check' functions\n\n")
 
 
 testRUnit.checkEquals <- function()
@@ -52,6 +52,23 @@ testRUnit.checkTrue <- function()
 {
   checkException( checkTrue( FALSE))
   checkEquals( checkTrue( TRUE), TRUE)
+
+  ##  named arguments
+  namedArg <- TRUE
+  names(namedArg) <- "Yes"
+  checkEquals( checkTrue( namedArg), TRUE)
+  
+  namedArg <- FALSE
+  names(namedArg) <- "No"
+  checkException( checkTrue( namedArg))
+
+
+  ##  incorrect length
+  checkException( checkTrue( c(TRUE, TRUE)))
+  checkException( checkTrue( c(FALSE, TRUE)))
+  checkException( checkTrue( logical(0)))
+  checkException( checkTrue( logical(2)))
+  
 }
 
 
@@ -68,4 +85,11 @@ testRUnit.checkException <- function()
   checkException( checkEqualsNumeric( 24, 24, tol="dummy"))
 
   
+}
+
+
+testRUnit.DEACTIVATED <- function()
+{
+
+  checkException( DEACTIVATED())
 }

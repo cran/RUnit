@@ -15,12 +15,13 @@
 ##  along with this program; if not, write to the Free Software
 ##  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 
-##  $Id: htmlProtocol.r,v 1.13 2004/09/28 09:11:46 kjuen Exp $
+##  $Id: htmlProtocol.r,v 1.16 2005/02/02 12:38:20 kjuen Exp $
 
 printHTMLProtocol <- function(testData,
                               fileName = "",
                               separateFailureList = TRUE,
-                              traceBackCutOff=9) {
+                              traceBackCutOff=9,
+                              testFileToLinkMap=function(x) x) {
 
   ##@bdescr
   ##  Report generator
@@ -32,7 +33,8 @@ printHTMLProtocol <- function(testData,
   ##@in  fileName            : [character]
   ##@in  separateFailureList : [logical] if TRUE (default) add a list of all failures
   ##@in  traceBackCutOff     : [integer] number of steps back in the trace back stack to be displayed
-
+  ##@in  testFileToLinkMap   : [function] a function transforming the full name of the test file to a link location
+  
   ## --------------------------------
   ##  CHECK OF INPUT DATA
   ## --------------------------------
@@ -150,7 +152,7 @@ printHTMLProtocol <- function(testData,
   writeHtmlSection(title, 1, htmlFile=fileName)
 
   if(length(testData) == 0) {
-    writeP("no test cases :-(")
+    writeP(" no test cases :-(")
     return()
   }
   ## basic Info
@@ -347,23 +349,18 @@ printHTMLProtocol <- function(testData,
       res <- tsList$sourceFileResults
       testFileNames <- names(res)
       if(length(res) == 0) {
-        pr("no test files")
+        pr(" no test files")
       }
       else {
         ## loop over all source files
         writeBeginTag("ul", htmlFile=fileName)
         for(testFileName in testFileNames) {
-          writeBeginTag("li", htmlFile=fileName)
-          writeLink(target=testFileName,
-                    name=paste("Test file:", testFileName),
-                    htmlFile=fileName)
-
-
           testFuncNames <- names(res[[testFileName]])
-          if(length(testFuncNames) == 0) {
-            pr("no test functions")
-          }
-          else {
+          if(length(testFuncNames) > 0) {
+            writeBeginTag("li", htmlFile=fileName)
+            writeLink(target=testFileToLinkMap(testFileName),
+                      name=paste("Test file:", basename(testFileName)),
+                      htmlFile=fileName)
             ## loop over all test functions in the test file
             writeBeginTag("ul", htmlFile=fileName)
             for(testFuncName in testFuncNames) {

@@ -15,7 +15,7 @@
 ##  along with this program; if not, write to the Free Software
 ##  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 
-##  $Id: checkFuncs.r,v 1.5 2004/09/07 15:28:55 kjuen Exp $
+##  $Id: checkFuncs.r,v 1.8 2005/04/07 14:02:02 burger Exp $
 
 
 checkEquals <- function(a, b, msg, tolerance = .Machine$double.eps^0.5, ...)
@@ -81,20 +81,25 @@ checkEqualsNumeric <- function(a, b, msg, tolerance = .Machine$double.eps^0.5, .
 }
 
 
-
-checkTrue <- function(a, msg)
+checkTrue <- function(expr, msg)
 {
   ##@bdescr
   ## checks whether or not something is true
   ##@edescr
-  ##@in a   : [expression] the logical expression to be checked to be TRUE
-  ##@in msg : [character|TRUE] optional message to further identify and document the call
-
+  ##
+  ##@in expr : [expression] the logical expression to be checked to be TRUE
+  ##@in msg  : [character|TRUE] optional message to further identify and document the call
+  ##
+  ##@ret     : [logical] TRUE, if the expression in a evaluates to TRUE, else a stop signal is issued 
 
   if(exists(".testLogger", envir=.GlobalEnv)) {
     .testLogger$incrementCheckNum()
   }
 
+  ##  allow named logical argument expr
+  a <- eval(expr)
+  names(a) <- NULL
+  
   if (!identical(a, TRUE)) {
     if(exists(".testLogger", envir=.GlobalEnv)) {
       .testLogger$setFailure()
@@ -105,6 +110,7 @@ checkTrue <- function(a, msg)
     return(TRUE)
   }
 }
+
 
 checkException <- function(expr, msg)
 {
@@ -132,11 +138,17 @@ checkException <- function(expr, msg)
 }
 
 
-
 DEACTIVATED <- function(msg="")
 {
   ##@bdescr
-  ## checks whether or not something is true
+  ##  Convenience function, for maintaining test suites.
+  ##  If placed in an existing test case call
+  ##  the test will be executed normally until (so all code will be checked and
+  ##  errors or failures reported as usual) occurance of the call
+  ##  after which execution will leave the test case.
+  ##  An entry for a seperate table in the log will be added
+  ##  for this test case.
+  ##
   ##@edescr
   ##@in a   : [expression] the logical expression to be checked to be TRUE
   ##@in msg : [character|TRUE] optional message to further identify and document the call

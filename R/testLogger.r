@@ -15,7 +15,7 @@
 ##  along with this program; if not, write to the Free Software
 ##  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 
-##  $Id: testLogger.r,v 1.9 2004/09/09 10:21:22 kjuen Exp $
+##  $Id: testLogger.r,v 1.10 2005/04/07 13:59:22 burger Exp $
 
 
 .newTestLogger <- function(useOwnErrorHandler) {
@@ -170,22 +170,43 @@
   }
 
   isFailure <- function() {
+    ##@bdescr
+    ##
+    ##@edescr
     return(.failure)
   }
 
   setFailure <- function() {
+    ##@bdescr
+    ##  set failure status to TRUE
+    ##@edescr
     .failure <<- TRUE
   }
 
   isDeactivated <- function() {
+    ##@bdescr
+    ##
+    ##@edescr
+    ##@ret  : [logical] TRUE if deactivation msg is not NULL
     return(!is.null(.deactivationMsg))
   }
 
   setDeactivated <- function(msg) {
+    ##@bdescr
+    ##  set deactivation msg variable, indicating a deactivated test case
+    ##@edescr
+    ##@in  msg : [character] message string
+    
+    if (length(msg) > 1) {
+      msg <- paste(msg, collapse=" ")
+    }
     .deactivationMsg <<- msg
   }
 
   incrementCheckNum <- function() {
+    ##@bdescr
+    ##  increment internal counter of total num of test cases
+    ##@edescr
     .checkNum <<- 1 + .checkNum
   }
 
@@ -206,10 +227,6 @@
 
 
 
-
-
-
-
 getErrors <- function(testData) {
   ##@bdescr
   ##  tools to handle the testData listlistlist
@@ -217,7 +234,8 @@ getErrors <- function(testData) {
   ##@edescr
   ##
   ##@in testData : [list] S3 RUnitTestData class object
-
+  ##@ret         : [list] containing no of errors, deactivated, failed, and total test functions
+  
   if(class(testData) != "RUnitTestData") {
     stop("getErrors needs an object of class 'RUnitTestData' as argument.")
   }

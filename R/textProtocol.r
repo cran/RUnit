@@ -15,7 +15,7 @@
 ##  along with this program; if not, write to the Free Software
 ##  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 
-##  $Id: textProtocol.r,v 1.10 2004/09/09 10:21:22 kjuen Exp $
+##  $Id: textProtocol.r,v 1.11 2005/02/02 12:38:20 kjuen Exp $
 
 printTextProtocol <- function(testData,
                               fileName = "",
@@ -178,13 +178,10 @@ printTextProtocol <- function(testData,
       else {
         ## loop over all source files
         for(testFileName in testFileNames) {
-          pr("---------------------------")
-          pr("Test file:", testFileName)
           testFuncNames <- names(res[[testFileName]])
-          if(length(testFuncNames) == 0) {
-            pr("no test functions")
-          }
-          else {
+          if(length(testFuncNames) > 0) {
+            pr("---------------------------")
+            pr("Test file:", testFileName)
             ## loop over all test functions in the test file
             for(testFuncName in testFuncNames) {
               testFuncInfo <- res[[testFileName]][[testFuncName]]
