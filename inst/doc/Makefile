@@ -1,3 +1,10 @@
+##
+##  RUnit
+##  
+##  utility 
+##  create PDF document from dvi (usefull if R CMD INSTALL fails to build the pdf)
+##  $Id: Makefile,v 1.1 2005/09/29 12:16:08 burger Exp $
+##
 all:       RUnit.pdf clean
 RUnit.pdf: RUnit.ps
 	ps2pdf  -dEncodeColorImages=false -dColorImageFilter=/FlateEncode -dAutoRotatePages=/None RUnit.ps
