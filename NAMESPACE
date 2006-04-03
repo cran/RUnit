@@ -8,13 +8,11 @@
 ## initialization of classes, namespace, ...
 ##
 ##
-## Dependencies
-## =====================================
 ##
 ##
 ## Version
 ## =====================================
-##  $Id: NAMESPACE,v 1.4 2004/09/22 13:24:25 burger Exp $
+##  $Id: NAMESPACE,v 1.5 2006/01/20 17:21:36 burger Exp $
 ##
 ##
 ######################################################################
@@ -28,6 +26,7 @@ export(".setUp",
        "checkEquals",
        "checkEqualsNumeric",
        "checkException",
+       "checkIdentical",
        "DEACTIVATED",
        "defineTestSuite",
        "getErrors",

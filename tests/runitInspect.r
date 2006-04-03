@@ -15,7 +15,7 @@
 ##  along with this program; if not, write to the Free Software
 ##  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 ##
-##  $Id: runitInspect.r,v 1.1 2005/04/07 14:17:54 burger Exp $
+##  $Id: runitInspect.r,v 1.2 2006/03/21 14:32:27 burger Exp $
 
 
 cat("\n\nRUnit test cases for 'RUnit:inspect' functions\n\n")
@@ -32,16 +32,16 @@ foo <- function(x) {
 
 testRUnit.inspect <- function() {
 
-  DEACTIVATED("envir issue: Error in inspect(foo(10)) : Object \"track\" not found.")
+  ##DEACTIVATED("envir issue: Error in inspect(foo(10)) : Object \"track\" not found.")
   ## the name track is necessary
-  track <- tracker()
+  track <<- tracker()
   
   ## initialize the tracker
   track$init()
   
   ## inspect the function
   ## res will collect the result of calling foo
-  res <- inspect(foo(10))
+  res <- inspect(foo(10), track=track)
   checkEquals( res, 5050)
 
 }
@@ -49,16 +49,17 @@ testRUnit.inspect <- function() {
 
 testRUnit.getTrackInfo <- function() {
 
-  DEACTIVATED("envir issue: Error in inspect(foo(10)) : Object \"track\" not found.")
   ## the name track is necessary
-  track <- tracker()
+  track <<- tracker()
   
   ## initialize the tracker
   track$init()
   
   ## inspect the function
+  checkTrue( exists("foo"))
+  
   ## res will collect the result of calling foo
-  res <- inspect(foo(10))
+  res <- inspect(foo(10), track=track)
   checkEquals( res, 5050)
 
   ## get the tracked function call info

@@ -1,5 +1,5 @@
 ##  RUnit : A unit test framework for the R programming language
-##  Copyright (C) 2003, 2004  Thomas Koenig, Matthias Burger, Klaus Juenemann
+##  Copyright (C) 2003-2006  Thomas Koenig, Matthias Burger, Klaus Juenemann
 ##
 ##  This program is free software; you can redistribute it and/or modify
 ##  it under the terms of the GNU General Public License as published by
@@ -15,7 +15,7 @@
 ##  along with this program; if not, write to the Free Software
 ##  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 
-##  $Id: runit.r,v 1.17 2005/11/14 12:37:55 burger Exp $
+##  $Id: runit.r,v 1.18 2006/03/21 14:37:32 burger Exp $
 
 defineTestSuite <- function(name, dirs, testFileRegexp="^runit.+\\.r$",
                             testFuncRegexp="^test.+")
@@ -51,26 +51,30 @@ isValidTestSuite <- function(testSuite)
   ##@in   testSuite : [RUnitTestSuite] S3 class (list) object, input object for test runner
   ##@ret  : [logical] TRUE if testSuite is valid
   ##
-  ##@codestatus : untested
+  ##@codestatus : testing
   
   if(!identical(class(testSuite), "RUnitTestSuite"))
   {
+    warning(paste("'testSuite' object is not of class 'RUnitTestSuite'."))
     return(FALSE)
   }
   if(!setequal(names(testSuite), c("name", "dirs", "testFileRegexp", "testFuncRegexp")))
   {
+    warning("'testSuite' object does not conform to S3 class definition.")
     return(FALSE)
   }
   for(i in seq(along=testSuite))
   {
     if(!is.character(testSuite[[i]]))
     {
-      
+      warning(paste("'testSuite' object does not conform to S3 class definition.\n",
+                    names(testSuite)[i],"has to be of type 'character'."))
       return(FALSE)
     }
   }
   if (!all(file.exists(testSuite[["dirs"]])))
   {
+    warning(paste("specifed directory",testSuite[["dirs"]],"not found."))
     return(FALSE)
   }
   return(TRUE)

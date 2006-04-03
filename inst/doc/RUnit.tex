@@ -1,6 +1,6 @@
 % -*- mode: noweb; noweb-default-code-mode: R-mode; -*-
 %
-%  $Id: RUnit.Rnw,v 1.17 2004/09/30 13:19:57 kjuen Exp $
+%  $Id: RUnit.Rnw,v 1.18 2006/04/04 15:07:24 burger Exp $
 %
 %
 %\VignetteIndexEntry{RUnit primer}
@@ -27,10 +27,10 @@
 
 %\makeindex
 %
-\usepackage{/mnt/local/R/R-2.2.1/lib/R/share/texmf/Sweave}
+\usepackage{/mnt/local/R/sarge/R-2.2.1-sarge/lib/R/share/texmf/Sweave}
 \begin{document}
 \title{RUnit - A Unit Test Framework for R}
-\author{Thomas K\"onig\footnote{thomas.koenig@epigenomics.com}, Klaus J\"unemann\footnote{klaus.juenemann@epigenomics.com}, and Matthias Burger\\Epigenomics AG}
+\author{Thomas K\"onig\footnote{thomas.koenig@epigenomics.com}, Klaus J\"unemann, and Matthias Burger\\Epigenomics AG}
 \maketitle
 \tableofcontents
 \section*{Abstract}
@@ -132,7 +132,9 @@ of tips relating to a Test-First development approach can be found in \cite{tfg}
     a library. Since R does not provide very much language support for this
     distinction, the first step here is to clarify which
     functions are meant to be called by a user of a package and which are
-    not. If internal functions are directly tested, the ability of
+    not (namespaces in R provide a useful directive for making this distinction, if
+    the export list is selected carefully and maintained). 
+    If internal functions are directly tested, the ability of
     refactoring gets lost because this typically involves
     reorganization of the internal part of a library.}
 
@@ -270,8 +272,8 @@ The usage of the Code Inspector and the Tracker object is very simple. The follo
 > track$init()
 > a <- 1:10
 > d <- seq(0, 1, 0.1)
-> resFoo <- inspect(foo(a))
-> resBar <- inspect(bar(d))
+> resFoo <- inspect(foo(a), track = track)
+> resBar <- inspect(bar(d), track = track)
 > resTrack <- track$getTrackInfo()
 > printHTML.trackInfo(resTrack)
 \end{Sinput}
