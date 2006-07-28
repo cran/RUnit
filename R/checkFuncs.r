@@ -15,7 +15,7 @@
 ##  along with this program; if not, write to the Free Software
 ##  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 
-##  $Id: checkFuncs.r,v 1.13 2006/04/03 16:34:34 burger Exp $
+##  $Id: checkFuncs.r,v 1.15 2006/05/22 08:33:18 burger Exp $
 
 
 checkEquals <- function(target, current, msg="",
@@ -170,6 +170,9 @@ checkException <- function(expr, msg="", silent=FALSE)
   ## checks if a function call creates an error. The passed function must be parameterless.
   ## If you want to check a function with arguments, call it like this:
   ## 'checkException(function() func(args...))'
+  ##
+  ##  adding argument silent was suggested by Seth Falcon <sfalcon@fhcrc.org>
+  ##  who provided a patch.
   ##@edescr
   ##@in  func   : [parameterless function] the function to be checked
   ##@in  msg    : [character] an optional message to further identify and document the call
@@ -215,5 +218,5 @@ DEACTIVATED <- function(msg="")
   if(exists(".testLogger", envir=.GlobalEnv)) {
     .testLogger$setDeactivated(paste(msg, "\n", sep=""))
   }
-  stop(msp)
+  stop(msg)
 }

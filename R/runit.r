@@ -17,7 +17,7 @@
 
 ##  $Id: runit.r,v 1.18 2006/03/21 14:37:32 burger Exp $
 
-defineTestSuite <- function(name, dirs, testFileRegexp="^runit.+\\.r$",
+defineTestSuite <- function(name, dirs, testFileRegexp="^runit.+\\.[rR]$",
                             testFuncRegexp="^test.+")
 {
   ##@bdescr

@@ -16,7 +16,7 @@
 ##  along with this program; if not, write to the Free Software
 ##  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 
-##  $Id: 00Init.r,v 1.3 2004/09/22 13:23:53 burger Exp $
+##  $Id: 00Init.r,v 1.4 2006/07/17 17:27:22 burger Exp $
 
 
 .First.lib <- function(lib, package, where)
@@ -32,8 +32,8 @@
                   "\nCheck your library installation path.\n")
   require(methods) || stop(errMsg)
 
- 
-  cat(paste("\n RUnit loaded.\n"))
+  runitVersion <- packageDescription("RUnit", fields="Version")
+  cat(paste("\n RUnit", runitVersion,"loaded.\n"))
 }
 
 
@@ -54,7 +54,8 @@
                   "\nCheck your library installation path.\n")
   require(methods) || stop(errMsg)
 
-  cat(paste("\n RUnit loaded.\n"))
+  runitVersion <- packageDescription("RUnit", fields="Version")
+  cat(paste("\n RUnit", runitVersion,"loaded.\n"))
 }
 
 
