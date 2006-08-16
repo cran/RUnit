@@ -15,7 +15,7 @@
 ##  along with this program; if not, write to the Free Software
 ##  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 
-##  $Id: testLogger.r,v 1.10 2005/04/07 13:59:22 burger Exp $
+##  $Id: testLogger.r,v 1.11 2006/08/15 16:48:29 burgerm Exp $
 
 
 .newTestLogger <- function(useOwnErrorHandler) {
@@ -24,6 +24,10 @@
   ## TestLogger is an object based on the 'closure trick'. It has the task
   ## to store, administrate and print the test protocol.
   ##@edescr
+  ##@in  useOwnErrorHandler  : [logical] 
+  ##@ret                     : [list]
+  ##
+  ##@codestatus : internal
 
   ## private data:
   ## -----------------------

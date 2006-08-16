@@ -15,7 +15,7 @@
 ##  along with this program; if not, write to the Free Software
 ##  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 ##
-##  $Id: runitRUnit.r,v 1.8 2006/04/03 16:35:14 burger Exp $
+##  $Id: runitRUnit.r,v 1.9 2006/08/15 16:31:48 burgerm Exp $
 
 
 cat("\n\nRUnit test cases for 'RUnit:check' functions\n\n")
@@ -217,6 +217,29 @@ testRUnit.DEACTIVATED <- function()
   ##@edescr
 
   checkException( DEACTIVATED())
+}
+
+
+testRUnit.defineTestSuite <- function()
+{
+  ##@bdescr
+  ## test case for function defineTestSuite of class: none
+  ##@edescr
+  
+  ##  correct working
+  testSuite <- defineTestSuite("RUnit Example", system.file("examples", package="RUnit"), 
+                               testFileRegexp="correctTestCase.r")
+  
+  ##  this also works for S3 objects
+  checkTrue( inherits(testSuite, "RUnitTestSuite"))
+  checkTrue( is.list(testSuite))
+  checkTrue( all(c("name", "dirs", "testFileRegexp", "testFuncRegexp",
+                   "rngKind", "rngNormalKind") %in% names(testSuite)))
+  checkTrue( isValidTestSuite(testSuite))
+  
+  
+  ##  error handling
+  
 }
 
 
