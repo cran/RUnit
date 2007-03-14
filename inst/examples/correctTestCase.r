@@ -11,7 +11,7 @@
 ##
 ## Version
 ## =====================================
-##  $Id: correctTestCase.r,v 1.1 2005/11/14 12:36:41 burger Exp $
+##  $Id: correctTestCase.r,v 1.2 2007/03/18 23:49:51 burgerm Exp $
 ##
 ##
 ######################################################################
@@ -19,5 +19,5 @@
 test.correctTestCase <- function() {
 
   checkTrue( TRUE)
-  checkTrue( !isTRUE(FALSE))
+  checkTrue( !identical(TRUE, FALSE))
 }

@@ -15,7 +15,7 @@
 ##  along with this program; if not, write to the Free Software
 ##  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 
-##  $Id: checkFuncs.r,v 1.15 2006/05/22 08:33:18 burger Exp $
+##  $Id: checkFuncs.r,v 1.16 2007/03/16 11:08:15 burgerm Exp $
 
 
 checkEquals <- function(target, current, msg="",
@@ -45,7 +45,7 @@ checkEquals <- function(target, current, msg="",
   if(exists(".testLogger", envir=.GlobalEnv)) {
     .testLogger$incrementCheckNum()
   }
-  if (!isTRUE(checkNames)) {
+  if (!identical(TRUE, checkNames)) {
     names(target)  <- NULL
     names(current) <- NULL
   }
@@ -119,7 +119,7 @@ checkIdentical <- function(target, current, msg="")
   
   ##  strip attributes before comparing current and target
   result <- identical(target, current)
-  if (!isTRUE(result)) {
+  if (!identical(TRUE, result)) {
     if(exists(".testLogger", envir=.GlobalEnv)) {
       .testLogger$setFailure()
     }

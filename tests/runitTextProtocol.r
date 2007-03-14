@@ -15,7 +15,7 @@
 ##  along with this program; if not, write to the Free Software
 ##  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 ##
-##  $Id: runitTextProtocol.r,v 1.1 2004/06/03 11:47:20 burger Exp $
+##  $Id: runitTextProtocol.r,v 1.2 2007/03/18 23:51:51 burgerm Exp $
 
 
 cat("\n\nRUnit test cases for 'textProtocol' function\n\n")
@@ -23,6 +23,21 @@ cat("\n\nRUnit test cases for 'textProtocol' function\n\n")
 
 testRUnit.printTextProtocol <- function()
 {
+  ##  copy baseenv() logger
+  tmp <- get(".testLogger", envir = .GlobalEnv)
+  testCaseDir <- file.path(system.file(package="RUnit"), "examples")
+  testSuiteInternal <- defineTestSuite("RUnit Self Test", testCaseDir, "correctTestCase.r")
+  testData2 <- runTestSuite(testSuiteInternal, useOwnErrorHandler=FALSE)
+
+  timeStamp <- format(Sys.time(), "%y%m%d-%H%M")
+  testProtocolFile <- file.path(tempdir(), paste(timeStamp, "test_printHTMLProtocol.txt", sep="_"))
+  ret <- printTextProtocol(testData2, fileName=testProtocolFile)
+
+  assign(".testLogger", tmp, envir = .GlobalEnv)
+  
+  checkTrue( file.exists(testProtocolFile))
+
+
   ##  input argument error handling
   ##  missing 'testData' object
   checkException(printTextProtocol())

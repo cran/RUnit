@@ -15,7 +15,7 @@
 ##  along with this program; if not, write to the Free Software
 ##  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 ##
-##  $Id: runitRUnit.r,v 1.9 2006/08/15 16:31:48 burgerm Exp $
+##  $Id: runitRUnit.r,v 1.11 2007/03/18 23:54:07 burgerm Exp $
 
 
 cat("\n\nRUnit test cases for 'RUnit:check' functions\n\n")
@@ -107,7 +107,7 @@ testRUnit.checkIdentical <- function()
 
 
   ##  S4 objects
-  if (isTRUE(require(methods))) {
+  if (identical(TRUE, require(methods))) {
     setClass("track",
              representation(x="numeric", y="numeric"),
              where=.GlobalEnv)
@@ -146,7 +146,7 @@ testRUnit.checkIdentical <- function()
   checkException( checkIdentical( lm.D9base, lm.D9))
 
   ##  S4 objects
-  if (isTRUE(require(methods))) {
+  if (identical(TRUE, require(methods))) {
     setClass("track2",
              representation(x="numeric", y="numeric"),
              prototype(x=as.numeric(1:23), y=as.numeric(23:1)),
@@ -207,6 +207,12 @@ testRUnit.checkException <- function()
 
   checkException( stop("with message"), silent=FALSE)
   checkException( stop("wo message"), silent=TRUE)
+
+  ##  R 2.5.0 devel example that failed
+  ##  minimal example provided by Seth Falcon
+  ll = list()
+  ll[[1]] = function(x) stop("died")
+  checkException( do.call(ll[[1]], list(1)))
 }
 
 
@@ -257,35 +263,35 @@ testRUnit.isValidTestSuite <- function()
   ##  has to be S3 class 'RUnitTestSuite'
   testSuiteFail <- testSuite
   class(testSuiteFail) <- "NotUnitTestSuite"
-  checkTrue( !isTRUE(isValidTestSuite(testSuiteFail)))
+  checkTrue( !isValidTestSuite(testSuiteFail))
   
   ##  expecting list elements
   testSuiteFail <- testSuite
   testSuiteFail[["dirs"]] <- NULL
-  checkTrue( !isTRUE(isValidTestSuite(testSuiteFail)))
+  checkTrue( !isValidTestSuite(testSuiteFail))
   
   ##  has to be character
   testSuiteFail <- testSuite
   testSuiteFail[["name"]] <- list()
-  checkTrue( !isTRUE(isValidTestSuite(testSuiteFail)))
+  checkTrue( !isValidTestSuite(testSuiteFail))
  
   testSuiteFail <- testSuite
   testSuiteFail[["dirs"]] <- list()
-  checkTrue( !isTRUE(isValidTestSuite(testSuiteFail)))
+  checkTrue( !isValidTestSuite(testSuiteFail))
   
   testSuiteFail <- testSuite
   testSuiteFail[["testFileRegexp"]] <- list()
-  checkTrue( !isTRUE(isValidTestSuite(testSuiteFail)))
+  checkTrue( !isValidTestSuite(testSuiteFail))
   
   testSuiteFail <- testSuite
   testSuiteFail[["testFuncRegexp"]] <- list()
-  checkTrue( !isTRUE(isValidTestSuite(testSuiteFail)))
+  checkTrue( !isValidTestSuite(testSuiteFail))
   
   
   ##  director has to exist
   testSuiteFail <- testSuite
   testSuiteFail[["dirs"]] <- "doesNotExist"
-  checkTrue( !isTRUE(isValidTestSuite(testSuiteFail)))
+  checkTrue( !isValidTestSuite(testSuiteFail))
 }
   
 

@@ -15,7 +15,7 @@
 ##  along with this program; if not, write to the Free Software
 ##  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 
-##  $Id: htmlProtocol.r,v 1.19 2006/08/15 16:47:34 burgerm Exp $
+##  $Id: htmlProtocol.r,v 1.21 2007/03/19 00:54:10 burgerm Exp $
 
 printHTMLProtocol <- function(testData,
                               fileName = "",
@@ -100,19 +100,21 @@ printHTMLProtocol <- function(testData,
     writeEndTag("p", htmlFile=fileName)
     writeCR(htmlFile=fileName)
   }
+  
   writeLi <- function(..., para="") {
     writeBeginTag("li", para=para, htmlFile=fileName)
     writeRaw(paste(...), htmlFile=fileName)
     writeEndTag("li", htmlFile=fileName)
   }
+  
   createTestFuncRef <- function(testSuite, srcFileName, testFuncName,
                                 asAnchor=FALSE) {
     tmp <- paste(testSuite, srcFileName, testFuncName, sep="_")
     if(asAnchor) {
-      return(paste("#", gsub("\/", "_", tmp), sep=""))
+      return(paste("#", gsub("/", "_", tmp), sep=""))
     }
     else {
-      return(gsub("\/", "_", tmp))
+      return(gsub("/", "_", tmp))
     }
   }
 
@@ -429,13 +431,20 @@ printHTMLProtocol <- function(testData,
   colnames(ver) <- "Value"
 
   ##  compiler
+  ##  Linux
   rhome <- Sys.getenv("R_HOME")
-  makeconfFile <- file.path(rhome, "etc", "Makeconf")
-  
-  gccVersion <- system(paste("cat ", makeconfFile," | grep  \"^CXX =\" "),
-                       intern=TRUE)
-  gccVersion <- sub("^CXX[ ]* =[ ]*", "", gccVersion)
 
+  gccVersion <- as.character(NA)
+
+  ##  on Windows Makeconf does not exist
+  ##  OTOH I have no idea which compiler would be for R CMD INSTALL
+  ##  so we report NA
+  makeconfFile <- file.path(rhome, "etc", "Makeconf")
+  if (file.exists(makeconfFile)) {
+    gccVersion <- system(paste("cat ", makeconfFile," | grep  \"^CXX =\" "),
+                         intern=TRUE)
+    gccVersion <- sub("^CXX[ ]* =[ ]*", "", gccVersion)
+  }
   if (length(gccVersion) > 0) {
     ver <- rbind(ver, gccVersion)
     rownames(ver)[dim(ver)[1]] <- "gcc"
