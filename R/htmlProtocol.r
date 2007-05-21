@@ -15,7 +15,7 @@
 ##  along with this program; if not, write to the Free Software
 ##  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 
-##  $Id: htmlProtocol.r,v 1.21 2007/03/19 00:54:10 burgerm Exp $
+##  $Id: htmlProtocol.r,v 1.22 2007/04/05 14:28:35 burgerm Exp $
 
 printHTMLProtocol <- function(testData,
                               fileName = "",
@@ -164,7 +164,8 @@ printHTMLProtocol <- function(testData,
   errInfo <- getErrors(testData)
   writeP(paste("Number of test functions:", errInfo$nTestFunc))
   if(errInfo$nDeactivated > 0) {
-    writeP(paste("Number of deactivated test functions:", errInfo$nDeactivated))
+    writeP(paste("Number of deactivated test functions:", errInfo$nDeactivated),
+           para=ifelse(errInfo$nDeactivated == 0, "", paste("style", deactivatedStyle, sep="=")))
   }
   writeP(paste("Number of errors:", errInfo$nErr),
          para=ifelse(errInfo$nErr == 0, "", paste("style", errorStyle, sep="=")))
@@ -398,6 +399,8 @@ printHTMLProtocol <- function(testData,
                   writeEndTag("a", htmlFile=fileName)
                 }
                 else if (testFuncInfo$kind == "deactivated") {
+                  writeBeginTag("u", para=paste("style", deactivatedStyle, sep="="),
+                                htmlFile=fileName)
                   writeRaw(paste(testFuncName, ": DEACTIVATED, ", sep=""),
                            htmlFile=fileName)
                   writeEndTag("a", htmlFile=fileName)

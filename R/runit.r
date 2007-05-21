@@ -1,5 +1,5 @@
 ##  RUnit : A unit test framework for the R programming language
-##  Copyright (C) 2003-2006  Thomas Koenig, Matthias Burger, Klaus Juenemann
+##  Copyright (C) 2003-2007  Thomas Koenig, Matthias Burger, Klaus Juenemann
 ##
 ##  This program is free software; you can redistribute it and/or modify
 ##  it under the terms of the GNU General Public License as published by
@@ -15,7 +15,7 @@
 ##  along with this program; if not, write to the Free Software
 ##  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 
-##  $Id: runit.r,v 1.20 2006/08/15 16:50:29 burgerm Exp $
+##  $Id: runit.r,v 1.24 2007/05/18 12:58:11 burgerm Exp $
 
 defineTestSuite <- function(name, dirs, 
                             testFileRegexp="^runit.+\\.[rR]$",
@@ -149,11 +149,9 @@ isValidTestSuite <- function(testSuite)
   
   ##  write to stdout for logging
 
-
   func <- get(funcName, envir=envir)
   ## anything else than a function is ignored.
   if(mode(func) != "function") {
-##     cat("\n ", funcName," is not of mode function. skipped.\n")
     return()
   }
 
@@ -215,7 +213,7 @@ isValidTestSuite <- function(testSuite)
   ##@in testFuncRegexp : [character] a regular expression identifying the names of test functions
   ##
   ##@codestatus : internal
-  
+
   .testLogger$setCurrentSourceFile(absTestFileName)
   if (!file.exists(absTestFileName)) {
     message <- paste("Test case file ", absTestFileName," not found.")
@@ -223,33 +221,44 @@ isValidTestSuite <- function(testSuite)
                         errorMsg=message)
     return()
   }
+  
 
+  sandbox <- new.env(parent=.GlobalEnv)
+  ##  will be destroyed after function closure is left
+  
   ##  catch syntax errors in test case file
-  res <- try(source(absTestFileName, local=TRUE))
+  res <- try(sys.source(absTestFileName, envir=sandbox))
   if (inherits(res, "try-error")) {
     message <- paste("Error while sourcing ",absTestFileName,":",geterrmessage())
     .testLogger$addError(testFuncName=absTestFileName,
                         errorMsg=message)
     return()
   }
-
-  testFunctions <- ls(pattern=testFuncRegexp)
-  for (funcName in testFunctions) {
-    .executeTestCase(funcName, envir=environment(), setUpFunc=.setUp, tearDownFunc=.tearDown)
+  ##  test file provides definition of .setUp/.tearDown
+  if (exists(".setUp", envir=sandbox, inherits=FALSE)) {
+    .setUp <- get(".setUp", envir=sandbox)
   }
+  if (exists(".tearDown", envir=sandbox, inherits=FALSE)) {
+    .tearDown <- get(".tearDown", envir=sandbox)
+  }
+  testFunctions <- ls(pattern=testFuncRegexp, envir=sandbox)
+  for (funcName in testFunctions) {
+    .executeTestCase(funcName, envir=sandbox, setUpFunc=.setUp, tearDownFunc=.tearDown)
+  }
+  
 }
 
 
 runTestSuite <- function(testSuites, useOwnErrorHandler=TRUE) {
   ##@bdescr
   ## This is the main function of the runit framework. It finds all the relevant
-  ## test files and triggers all the required action. At the end it creates a test
-  ## protocol file. 
+  ## test files and triggers all the required actions. At the end it creates a test
+  ## protocol data object. 
   ## IMPORTANT to note, the random number generator is (re-)set to the default
   ## methods specifed in defineTestSuite() before each new test case file is sourced. 
-  ## This garantees that each test case can rely
+  ## This garantees that each new test case set defined together in on file can rely
   ## on the default, even if the random number generator version is being reconfigured in some
-  ## test case file(s).
+  ## previous test case file(s).
   ##@edescr
   ##
   ##@in  testSuites         : [list] list of test suite lists
@@ -275,6 +284,9 @@ runTestSuite <- function(testSuites, useOwnErrorHandler=TRUE) {
   on.exit(RNGkind(kind=rngDefault[1], normal.kind=rngDefault[2]))
   
   oldErrorHandler <- getOption("error")
+  ## reinstall error handler
+  on.exit(options(error=oldErrorHandler), add=TRUE)
+  
   ## initialize TestLogger
   assign(".testLogger", .newTestLogger(useOwnErrorHandler), envir = .GlobalEnv)
 
@@ -301,8 +313,7 @@ runTestSuite <- function(testSuites, useOwnErrorHandler=TRUE) {
   }
 
   ret <- .testLogger$getTestData()
-  ## reinstall error handler
-  options(error=oldErrorHandler)
+  
   return(ret)
 }
 

@@ -1,6 +1,6 @@
 ######################################################################
 ##  RUnit : A unit test framework for the R programming language
-##  Copyright (C) 2003, 2004  Thomas Koenig, Matthias Burger, Klaus Juenemann
+##  Copyright (C) 2003-2007  Thomas Koenig, Matthias Burger, Klaus Juenemann
 ##
 ##  This program is free software; you can redistribute it and/or modify
 ##  it under the terms of the GNU General Public License as published by
@@ -16,7 +16,7 @@
 ##  along with this program; if not, write to the Free Software
 ##  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 
-##  $Id: 00Init.r,v 1.4 2006/07/17 17:27:22 burger Exp $
+##  $Id: 00Init.r,v 1.5 2007/04/08 12:11:49 burgerm Exp $
 
 
 .First.lib <- function(lib, package, where)
@@ -32,7 +32,7 @@
                   "\nCheck your library installation path.\n")
   require(methods) || stop(errMsg)
 
-  runitVersion <- packageDescription("RUnit", fields="Version")
+  runitVersion <- packageDescription("RUnit", lib.loc=lib, fields="Version")
   cat(paste("\n RUnit", runitVersion,"loaded.\n"))
 }
 
@@ -54,7 +54,8 @@
                   "\nCheck your library installation path.\n")
   require(methods) || stop(errMsg)
 
-  runitVersion <- packageDescription("RUnit", fields="Version")
+  
+  runitVersion <- packageDescription("RUnit", lib.loc=lib, fields="Version")
   cat(paste("\n RUnit", runitVersion,"loaded.\n"))
 }
 

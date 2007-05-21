@@ -15,7 +15,7 @@
 ##  along with this program; if not, write to the Free Software
 ##  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 
-##  $Id: checkFuncs.r,v 1.16 2007/03/16 11:08:15 burgerm Exp $
+##  $Id: checkFuncs.r,v 1.17 2007/04/09 17:25:51 burgerm Exp $
 
 
 checkEquals <- function(target, current, msg="",
@@ -66,11 +66,12 @@ checkEqualsNumeric <- function(target, current, msg="", tolerance = .Machine$dou
 {
   ##@bdescr
   ## checks if two objects are equal, thin wrapper around 'all.equal.numeric'
-  ## with tolerance one can adjust to and allow for numerical imprecission
+  ## with tolerance one can adjust to and allow for numerical imprecission.
+  ## current and target are converted via as.vector() thereby stripping all attributes.
   ##@edescr
   ##@in target    : [ANY] one thing to be compared
   ##@in current   : [ANY] the second object to be compared
-  ##@in tolerance : [numeric] directly passed to 'all.equal', see there for further documentation
+  ##@in tolerance : [numeric] directly passed to 'all.equal.numeric', see there for further documentation
   ##@in msg       : [character] an optional message to further identify and document the call
   ##
   ##@ret          : [logical] TRUE, if objects 'target' and 'current' are equal w.r.t. specified numerical tolerance, else a stop signal is issued 
@@ -80,7 +81,9 @@ checkEqualsNumeric <- function(target, current, msg="", tolerance = .Machine$dou
   if(!is.numeric(tolerance)) {
     stop("tolerance has to be a numeric value")
   }
-
+  if (length(tolerance) != 1) {
+    stop("tolerance has to be a scalar")
+  }
   if(exists(".testLogger", envir=.GlobalEnv)) {
     .testLogger$incrementCheckNum()
   }

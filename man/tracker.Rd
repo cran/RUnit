@@ -15,8 +15,9 @@
 %%  along with this program; if not, write to the Free Software
 %%  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 
-%%  $Id: tracker.Rd,v 1.10 2007/03/18 23:34:07 burgerm Exp $
+%%  $Id: tracker.Rd,v 1.11 2007/05/15 21:43:51 burgerm Exp $
 
+\encoding{latin1}
 \name{tracker}
 \alias{tracker}
 
@@ -64,7 +65,7 @@ function on the inspect list with the following elements:
   \item{funcCall}{The declaration of the function.}
 }
 
-\author{Thomas K\"onig, Klaus J\"unemann \& Matthias Burger}
+\author{Thomas \enc{König}{Koenig}, Klaus \enc{Jünemann}{Juenemann} \& Matthias Burger}
 
 \seealso{
   \code{\link{inspect}} for the registration of functions \& methods to

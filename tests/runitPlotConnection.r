@@ -15,7 +15,7 @@
 ##  along with this program; if not, write to the Free Software
 ##  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 ##
-##  $Id: runitPlotConnection.r,v 1.1 2007/03/19 20:08:13 burgerm Exp $
+##  $Id: runitPlotConnection.r,v 1.2 2007/03/23 14:18:38 burgerm Exp $
 
 
 cat("\n\nRUnit test cases for 'RUnit:plotConnection' function\n\n")
@@ -27,6 +27,11 @@ testRUnit.plotConnection <- function()
   ## test case for function plotConnection of class: none
   ##@edescr
 
+  ##  requires X server to be available for png device
+  if (!interactive()) {
+    DEACTIVATED("plotConnection uses png device which requires X sverer to be available.")
+  }
+  
   ##  1) no counts
   conMat <- matrix(0, nrow=5, ncol=5)
   timeStamp <- format(Sys.time(), "%y%m%d-%H%M")

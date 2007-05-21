@@ -1,5 +1,5 @@
 ##  RUnit : A unit test framework for the R programming language
-##  Copyright (C) 2003, 2004  Thomas Koenig, Matthias Burger, Klaus Juenemann
+##  Copyright (C) 2003-2007  Thomas Koenig, Matthias Burger, Klaus Juenemann
 ##
 ##  This program is free software; you can redistribute it and/or modify
 ##  it under the terms of the GNU General Public License as published by
@@ -15,7 +15,7 @@
 ##  along with this program; if not, write to the Free Software
 ##  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 
-##  $Id: testLogger.r,v 1.11 2006/08/15 16:48:29 burgerm Exp $
+##  $Id: testLogger.r,v 1.12 2007/04/09 17:38:35 burgerm Exp $
 
 
 .newTestLogger <- function(useOwnErrorHandler) {
@@ -45,13 +45,28 @@
 
   ## define own error handler
   ## -----------------------
-  errorHandler<-function() {
-    dump.frames();
-    frameLimit<-length(last.dump)-1
-    .currentTraceBack <<- NULL
-    for(i in 1:frameLimit)
-      .currentTraceBack <<- c(.currentTraceBack, names(last.dump)[i])
+  errorHandler <- function() {
+    ##@bdescr
+    ##  used as default error handler during test case execution iff
+    ##  the user specified 'useOwnErrorHandler' as TRUE (default).
+    ##  called in case an error condition, typically stop() has been signalled.
+    ##  tries to create a traceback object, currently only used by addError().
+    ##
+    ##  not provided via testLogger but used by R's error handler.
+    ##@edescr
+    ##
+    ##@ret  : [NULL] used for it's side effect
+    ##
+    ##@codestatus : internal
+    
+    res <- try(dump.frames())
+    if (inherits(res, "try-error")) {
+      .currentTraceBack <<- "traceback not available (dump.frames failed)."
+    } else {
+      .currentTraceBack <<- names(last.dump)[-length(last.dump)]
+    }
   }
+  
   if(useOwnErrorHandler) {
     options(error=errorHandler)
   }

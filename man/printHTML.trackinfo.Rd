@@ -15,8 +15,9 @@
 %%  along with this program; if not, write to the Free Software
 %%  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 
-%%  $Id: printHTML.trackinfo.Rd,v 1.8 2007/03/18 23:36:02 burgerm Exp $
+%%  $Id: printHTML.trackinfo.Rd,v 1.9 2007/05/15 21:45:55 burgerm Exp $
 
+\encoding{latin1}
 \name{printHTML.trackInfo}
 \alias{printHTML.trackInfo}
 \title{Write HTML pages of the tracking result.}
@@ -49,7 +50,7 @@
   become clearly visible.
 }
 
-\author{Thomas K\"onig, Klaus J\"unemann \& Matthias Burger}
+\author{Thomas \enc{König}{Koenig}, Klaus \enc{Jünemann}{Juenemann} \& Matthias Burger}
 
 \examples{
 
