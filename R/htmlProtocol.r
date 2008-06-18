@@ -1,5 +1,5 @@
 ##  RUnit : A unit test framework for the R programming language
-##  Copyright (C) 2003, 2004  Thomas Koenig, Matthias Burger, Klaus Juenemann
+##  Copyright (C) 2003-2008  Thomas Koenig, Matthias Burger, Klaus Juenemann
 ##
 ##  This program is free software; you can redistribute it and/or modify
 ##  it under the terms of the GNU General Public License as published by
@@ -15,7 +15,7 @@
 ##  along with this program; if not, write to the Free Software
 ##  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 
-##  $Id: htmlProtocol.r,v 1.22 2007/04/05 14:28:35 burgerm Exp $
+##  $Id: htmlProtocol.r,v 1.25 2008/06/18 17:17:57 burgerm Exp $
 
 printHTMLProtocol <- function(testData,
                               fileName = "",
@@ -125,7 +125,7 @@ printHTMLProtocol <- function(testData,
       if(traceBackCutOff > length(testFuncInfo$traceBack)) {
         writeRaw("(traceBackCutOff argument larger than length of trace back: full trace back printed)<br/>", htmlFile=fileName)
         writeBeginTag("ol", htmlFile=fileName)
-        for(i in 1:length(traceBack)) {
+        for(i in seq_along(traceBack)) {
           writeBeginTag("li", htmlFile=fileName)
           writeRaw(traceBack[i], htmlFile=fileName)
           writeEndTag("li", htmlFile=fileName)
@@ -234,9 +234,9 @@ printHTMLProtocol <- function(testData,
       if(testData[[tsName]]$nErr > 0) {
         srcFileRes <- testData[[tsName]]$sourceFileResults
         srcFileNames <- names(srcFileRes)
-        for(i in seq(length=length(srcFileRes))) {
+        for(i in seq_along(srcFileRes)) {
           testFuncNames <- names(srcFileRes[[i]])
-          for(j in seq(length=length(testFuncNames))) {
+          for(j in seq_along(testFuncNames)) {
             funcList <- srcFileRes[[i]][[testFuncNames[j]]]
             if(funcList$kind == "error") {
               lnk <- paste("<a href=\"",
@@ -266,9 +266,9 @@ printHTMLProtocol <- function(testData,
       if(testData[[tsName]]$nFail > 0) {
         srcFileRes <- testData[[tsName]]$sourceFileResults
         srcFileNames <- names(srcFileRes)
-        for(i in seq(length=length(srcFileRes))) {
+        for(i in seq_along(srcFileRes)) {
           testFuncNames <- names(srcFileRes[[i]])
-          for(j in seq(length=length(testFuncNames))) {
+          for(j in seq_along(testFuncNames)) {
             funcList <- srcFileRes[[i]][[testFuncNames[j]]]
             if(funcList$kind == "failure") {
               lnk <- paste("<a href=\"",
@@ -299,9 +299,9 @@ printHTMLProtocol <- function(testData,
       if(testData[[tsName]]$nDeactivated > 0) {
         srcFileRes <- testData[[tsName]]$sourceFileResults
         srcFileNames <- names(srcFileRes)
-        for(i in seq(length=length(srcFileRes))) {
+        for(i in seq_along(srcFileNames)) {
           testFuncNames <- names(srcFileRes[[i]])
-          for(j in seq(length=length(testFuncNames))) {
+          for(j in seq_along(testFuncNames)) {
             funcList <- srcFileRes[[i]][[testFuncNames[j]]]
             if(funcList$kind == "deactivated") {
               lnk <- paste("<a href=\"",
@@ -376,7 +376,7 @@ printHTMLProtocol <- function(testData,
               writeBeginTag("a", para=paste("name=\"", anchorName, "\"", sep=""),
                             htmlFile=fileName)
               if(testFuncInfo$kind == "success") {
-                pr(paste(testFuncName, ":", " ... OK (", testFuncInfo$time,
+                pr(paste(testFuncName, ": (",testFuncInfo$checkNum, " checks) ... OK (", testFuncInfo$time,
                          " seconds)", sep=""))
                 writeEndTag("a", htmlFile=fileName)
               }
@@ -433,25 +433,26 @@ printHTMLProtocol <- function(testData,
   rownames(ver)[dim(ver)[1]] <- "host"
   colnames(ver) <- "Value"
 
-  ##  compiler
-  ##  Linux
+  ##  compiler used (under *nix)
   rhome <- Sys.getenv("R_HOME")
-
-  gccVersion <- as.character(NA)
-
   ##  on Windows Makeconf does not exist
   ##  OTOH I have no idea which compiler would be for R CMD INSTALL
   ##  so we report NA
   makeconfFile <- file.path(rhome, "etc", "Makeconf")
   if (file.exists(makeconfFile)) {
-    gccVersion <- system(paste("cat ", makeconfFile," | grep  \"^CXX =\" "),
-                         intern=TRUE)
-    gccVersion <- sub("^CXX[ ]* =[ ]*", "", gccVersion)
+    if (identical(.Platform$OS.type, "unix")) {
+      gccVersion <- system(paste("cat ", makeconfFile," | grep  \"^CXX =\" "),
+                           intern=TRUE)
+      
+      gccVersion <- sub("^CXX[ ]* =[ ]*", "", gccVersion)
+    } else {
+      gccVersion <- as.character(NA)
+    }
   }
-  if (length(gccVersion) > 0) {
-    ver <- rbind(ver, gccVersion)
-    rownames(ver)[dim(ver)[1]] <- "gcc"
-  }
+
+  ver <- rbind(ver, gccVersion)
+  rownames(ver)[dim(ver)[1]] <- "compiler"
+
   
   writeHtmlTable(ver,
                  htmlFile=fileName,

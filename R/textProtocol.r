@@ -15,7 +15,7 @@
 ##  along with this program; if not, write to the Free Software
 ##  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 
-##  $Id: textProtocol.r,v 1.13 2006/08/15 16:51:24 burgerm Exp $
+##  $Id: textProtocol.r,v 1.15 2008/06/18 17:18:10 burgerm Exp $
 
 printTextProtocol <- function(testData,
                               fileName = "",
@@ -126,10 +126,10 @@ printTextProtocol <- function(testData,
        sop(testData[[tsName]]$nErr, "error"), ", ",
        sop(testData[[tsName]]$nFail, "failure"), sep="")
     if(separateFailureList && (testData[[tsName]]$nErr + testData[[tsName]]$nFail > 0)) {
-      srcFileRes <- testData[[tsName]]$sourceFileResults
-      for(i in seq(length=length(srcFileRes))) {
+      srcFileRes <- testData[[tsName]][["sourceFileResults"]]
+      for(i in seq_along(srcFileRes)) {
         testFuncNames <- names(srcFileRes[[i]])
-        for(j in seq(length=length(testFuncNames))) {
+        for(j in seq_along(testFuncNames)) {
           funcList <- srcFileRes[[i]][[testFuncNames[j]]]
           if(funcList$kind == "error") {
             pr("ERROR in ", testFuncNames[j], ": ", funcList$msg, nl=FALSE, sep="")
@@ -191,7 +191,7 @@ printTextProtocol <- function(testData,
             for(testFuncName in testFuncNames) {
               testFuncInfo <- res[[testFileName]][[testFuncName]]
               if(testFuncInfo$kind == "success") {
-                pr(testFuncName, ":", " ... OK (", testFuncInfo$time, " seconds)", sep="")
+                pr(testFuncName, ": (",testFuncInfo$checkNum, " checks) ... OK (", testFuncInfo$time, " seconds)", sep="")
               }
               else {
                 if(testFuncInfo$kind == "error") {

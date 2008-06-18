@@ -15,7 +15,7 @@
 ##  along with this program; if not, write to the Free Software
 ##  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 
-##  $Id: runit.r,v 1.24 2007/05/18 12:58:11 burgerm Exp $
+##  $Id: runit.r,v 1.26 2008/06/18 17:16:31 burgerm Exp $
 
 defineTestSuite <- function(name, dirs, 
                             testFileRegexp="^runit.+\\.[rR]$",
@@ -61,7 +61,7 @@ isValidTestSuite <- function(testSuite)
   ##
   ##@codestatus : testing
   
-  if(!identical(class(testSuite), "RUnitTestSuite"))
+  if(!is(testSuite, "RUnitTestSuite"))
   {
     warning(paste("'testSuite' object is not of class 'RUnitTestSuite'."))
     return(FALSE)
@@ -72,7 +72,7 @@ isValidTestSuite <- function(testSuite)
     warning("'testSuite' object does not conform to S3 class definition.")
     return(FALSE)
   }
-  for(i in seq(along=testSuite))
+  for(i in seq_along(testSuite))
   {
     if(!is.character(testSuite[[i]]))
     {
@@ -187,6 +187,9 @@ isValidTestSuite <- function(testSuite)
     .testLogger$addSuccess(testFuncName=funcName, secs=round(timing[3], 2))
   }
 
+  ##  add number of check function calls within test case
+  .testLogger$addCheckNum(testFuncName=funcName)
+  
   ## safe execution of tearDown function
   res <- try(tearDownFunc())
   if (inherits(res, "try-error")) {
@@ -294,7 +297,7 @@ runTestSuite <- function(testSuites, useOwnErrorHandler=TRUE) {
   if(isValidTestSuite(testSuites)) {
     testSuites <- list(testSuites)
   }
-  for (i in seq(length=length(testSuites))) {
+  for (i in seq_along(testSuites)) {
     testSuite <- testSuites[[i]]
     if(!isValidTestSuite(testSuite)) {
       errMsg <- paste("Invalid test suite",testSuite$name,". Test run aborted.")

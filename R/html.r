@@ -15,7 +15,7 @@
 ##  along with this program; if not, write to the Free Software
 ##  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 
-##  $Id: html.r,v 1.6 2006/08/15 16:34:11 burgerm Exp $
+##  $Id: html.r,v 1.7 2007/11/27 18:52:00 burgerm Exp $
 
 
 writeRaw <- function(htmlStr,htmlFile,append=TRUE)
@@ -256,7 +256,7 @@ writeBeginTable <- function(header,htmlFile,border=1,
     writeBeginTag("tr",htmlFile)
 
     
-    for(i in seq(along=header)) {
+    for(i in seq_along(header)) {
       para <- ""
       if(!is.null(columnWidth)) {
         if (length(columnWidth) == length(header)) {
@@ -298,7 +298,7 @@ writeTableRow <- function(row,htmlFile,append=TRUE,bgcolor="")
   {
     bgcolor <- rep(bgcolor,length(row));
   }
-  for(i in seq(along=row))
+  for(i in seq_along(row))
   {
     if(bgcolor[i] == "")
     {

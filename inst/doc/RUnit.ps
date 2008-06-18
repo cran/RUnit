@@ -1,6 +1,7 @@
 %!PS-Adobe-2.0
-%%Creator: dvips(k) 5.95a Copyright 2005 Radical Eye Software
+%%Creator: dvips(k) 5.96.1 Copyright 2007 Radical Eye Software
 %%Title: RUnit.dvi
+%%CreationDate: Thu Jun 19 16:22:34 2008
 %%Pages: 11
 %%PageOrder: Ascend
 %%BoundingBox: 0 0 595 842
@@ -11,7 +12,7 @@
 %DVIPSWebPage: (www.radicaleye.com)
 %DVIPSCommandLine: dvips RUnit
 %DVIPSParameters: dpi=600
-%DVIPSSource:  TeX output 2007.05.21:1343
+%DVIPSSource:  TeX output 2008.06.19:1622
 %%BeginProcSet: tex.pro 0 0
 %!
 /TeXDict 300 dict def TeXDict begin/N{def}def/B{bind def}N/S{exch}N/X{S
@@ -147,8 +148,9 @@ H.L currentpoint exch pop vsize 72 sub exch DvipsToPDF HyperBasePt
 sub sub /pdf@voff exch def } def /H.R { currentpoint HyperBorder sub
 /pdf@ury exch def HyperBorder add /pdf@urx exch def currentpoint exch
 pop vsize 72 sub exch DvipsToPDF sub /pdf@voff exch def } def systemdict
-/pdfmark known not {userdict /pdfmark systemdict /cleartomark get put}
-if
+/pdfmark known { userdict /?pdfmark systemdict /exec get put }{ userdict
+/?pdfmark systemdict /pop get put userdict /pdfmark systemdict /cleartomark
+get put } ifelse
  
 @fedspecial end
 %%BeginFont: CMSLTT10
@@ -2417,9 +2419,9 @@ FC00007FFFF800001FFFE0000003FF000026267BAB31>136 D E
 137[85 90 63 64 66 1[90 81 90 134 45 85 1[45 90 81 49
 74 90 72 90 78 11[124 112 1[120 8[60 2[101 1[124 117
 1[122 13[81 81 81 49[{}31 143.462 /CMBX12 rf /Fk 252[42
-3[{}1 83.022 /CMSY10 rf /Fl 128[59 5[62 3[65 46 46 46
-1[65 59 65 98 33 2[33 65 59 1[52 65 52 1[59 12[85 6[107
-1[91 60 2[92 1[80 2[83 88 9[59 4[59 59 59 3[33 44[{}31
+3[{}1 83.022 /CMSY10 rf /Fl 128[59 9[65 46 46 46 1[65
+59 65 98 33 2[33 65 59 1[52 65 52 1[59 12[85 6[107 1[91
+60 2[92 1[80 2[83 88 7[59 59 5[59 59 59 3[33 44[{}31
 119.552 /CMR12 rf /Fm 136[115 2[61 62 61 2[79 88 133
 1[83 1[43 2[47 70 3[79 11[119 115 1[117 11[104 4[119
 19[52 45[{}18 172.188 /CMR17 rf end
@@ -2427,56 +2429,40 @@ FC00007FFFF800001FFFE0000003FF000026267BAB31>136 D E
 %%BeginSetup
 %%Feature: *Resolution 600dpi
 TeXDict begin
-%%BeginPaperSize: a4
-a4
-%%EndPaperSize
+%%PaperSize: A4
  end
 %%EndSetup
 %%Page: 1 1
 TeXDict begin 1 0 bop 0 0 a
-SDict begin /product where{pop product(Distiller)search{pop pop pop
-version(.)search{exch pop exch pop(3011)eq{gsave newpath 0 0 moveto
-closepath clip/Courier findfont 10 scalefont setfont 72 72 moveto(.)show
-grestore}if}{pop}ifelse}{pop}ifelse}if end
+SDict begin /product where{pop product(Distiller)search{pop pop pop version(.)search{exch pop exch pop(3011)eq{gsave newpath 0 0 moveto closepath clip/Courier findfont 10 scalefont setfont 72 72 moveto(.)show grestore}if}{pop}ifelse}{pop}ifelse}if end
  0 0 a 0 0 a
-SDict begin [ /Title () /Subject () /Creator (LaTeX with hyperref package)
-/Author () /Producer (dvips + Distiller) /Keywords () /DOCINFO pdfmark
-end
+SDict begin [ /Producer (dvips + Distiller) /Title () /Subject () /Creator (LaTeX with hyperref package) /Author () /Keywords () /DOCINFO pdfmark end
  0 0 a 60 166
 a
 SDict begin H.S end
  60 166 a 60 166 a
 SDict begin H.R end
  60 166 a 60 166 a
-SDict begin [ /View [/XYZ H.V] /Dest (page.1) cvn H.B /DEST pdfmark
-end
+SDict begin [ /View [/XYZ H.V] /Dest (page.1) cvn H.B /DEST pdfmark end
  60 166 a 60 194
 a
-SDict begin [ /Count -0 /Dest (section.1) cvn /Title (Introduction)
-/OUT pdfmark end
+SDict begin [ /Count -0 /Dest (section.1) cvn /Title (Introduction) /OUT pdfmark end
  60 194 a 60 194 a
-SDict begin [ /Count -2 /Dest (section.2) cvn /Title (The RUnit package)
-/OUT pdfmark end
+SDict begin [ /Count -2 /Dest (section.2) cvn /Title (The RUnit package) /OUT pdfmark end
  60 194 a 60 194 a
-SDict begin [ /Count -0 /Dest (subsection.2.1) cvn /Title (Test case execution)
-/OUT pdfmark end
+SDict begin [ /Count -0 /Dest (subsection.2.1) cvn /Title (Test case execution) /OUT pdfmark end
  60 194 a 60 194
 a
-SDict begin [ /Count -2 /Dest (subsection.2.2) cvn /Title (R Code Inspection)
-/OUT pdfmark end
+SDict begin [ /Count -2 /Dest (subsection.2.2) cvn /Title (R Code Inspection) /OUT pdfmark end
  60 194 a 60 194 a
-SDict begin [ /Count -0 /Dest (subsubsection.2.2.1) cvn /Title (Usage)
-/OUT pdfmark end
+SDict begin [ /Count -0 /Dest (subsubsection.2.2.1) cvn /Title (Usage) /OUT pdfmark end
  60 194 a 60 194 a
-SDict begin [ /Count -0 /Dest (subsubsection.2.2.2) cvn /Title (Technical Details)
-/OUT pdfmark end
+SDict begin [ /Count -0 /Dest (subsubsection.2.2.2) cvn /Title (Technical Details) /OUT pdfmark end
  60 194 a 60 194
 a
-SDict begin [ /Count -0 /Dest (section.3) cvn /Title (Future Development Ideas)
-/OUT pdfmark end
+SDict begin [ /Count -0 /Dest (section.3) cvn /Title (Future Development Ideas) /OUT pdfmark end
  60 194 a 60 194 a
-SDict begin [ /Page 1 /View [ /Fit ] /PageMode /UseOutlines  /DOCVIEW
-pdfmark end
+SDict begin [ /Page 1 /View [ /Fit ] /PageMode /UseOutlines /DOCVIEW pdfmark end
  60 194 a 60 194 a
 SDict begin [ {Catalog} << >> /PUT pdfmark end
  60 194 a 60 194
@@ -2485,22 +2471,20 @@ SDict begin H.S end
  60 194 a 60 194 a
 SDict begin 14.5 H.A end
  60 194 a 60 194 a
-SDict begin [ /View [/XYZ H.V] /Dest (Doc-Start) cvn H.B /DEST pdfmark
-end
+SDict begin [ /View [/XYZ H.V] /Dest (Doc-Start) cvn H.B /DEST pdfmark end
  60 194 a 362 696
 a Fm(R)l(Unit)52 b(-)f(A)i(Unit)e(T)-13 b(est)51 b(F)-13
 b(ramew)l(ork)50 b(for)i(R)264 992 y Fl(Thomas)37 b(K)804
 997 y(\177)804 992 y(onig)1020 948 y Fk(\003)1020 992
 y Fl(,)f(Klaus)i(J)1484 997 y(\177)1481 992 y(unemann,)f(and)i
-(Matthias)d(Burger)1252 1141 y(Epigenomics)g(A)m(G)1336
-1374 y(Ma)m(y)i(21,)g(2007)60 1961 y Fj(Con)l(ten)l(ts)60
+(Matthias)d(Burger)1252 1141 y(Epigenomics)g(A)m(G)1327
+1374 y(June)j(19,)f(2008)60 1961 y Fj(Con)l(ten)l(ts)60
 2059 y
 SDict begin H.S end
  60 2059 a 60 2059 a
 SDict begin 14.5 H.A end
  60 2059 a 60 2059 a
-SDict begin [ /View [/XYZ H.V] /Dest (section*.1) cvn H.B /DEST pdfmark
-end
+SDict begin [ /View [/XYZ H.V] /Dest (section*.1) cvn H.B /DEST pdfmark end
  60 2059
 a 60 2180 a
 SDict begin H.S end
@@ -2508,8 +2492,7 @@ SDict begin H.S end
 2180 y
 SDict begin 14.5 H.L end
  823 2180 a 823 2180 a
-SDict begin [ /Subtype /Link /Dest (section.1) cvn /H /I /Border [0
-0 12] /Color [1 0 0] H.B /ANN pdfmark end
+SDict begin [ /Subtype /Link /Dest (section.1) cvn /H /I /Border [0 0 12] /Color [1 0 0] H.B /ANN pdfmark end
  823 2180 a 2419 w Fi(2)60
 2398 y
 SDict begin H.S end
@@ -2517,8 +2500,7 @@ SDict begin H.S end
 b(age)1153 2398 y
 SDict begin 14.5 H.L end
  1153 2398 a 1153 2398 a
-SDict begin [ /Subtype /Link /Dest (section.2) cvn /H /I /Border [0
-0 12] /Color [1 0 0] H.B /ANN pdfmark end
+SDict begin [ /Subtype /Link /Dest (section.2) cvn /H /I /Border [0 0 12] /Color [1 0 0] H.B /ANN pdfmark end
  1153 2398 a
 2089 w Fi(4)206 2518 y
 SDict begin H.S end
@@ -2527,8 +2509,7 @@ b(case)g(execution)1253 2518 y
 SDict begin 14.5 H.L end
  1253 2518 a 1253 2518
 a
-SDict begin [ /Subtype /Link /Dest (subsection.2.1) cvn /H /I /Border
-[0 0 12] /Color [1 0 0] H.B /ANN pdfmark end
+SDict begin [ /Subtype /Link /Dest (subsection.2.1) cvn /H /I /Border [0 0 12] /Color [1 0 0] H.B /ANN pdfmark end
  1253 2518 a 61 w Fh(.)50 b(.)g(.)f(.)h(.)g(.)g(.)g(.)f(.)h(.)g(.)g(.)
 g(.)f(.)h(.)g(.)g(.)g(.)f(.)h(.)g(.)g(.)g(.)g(.)141 b(4)206
 2638 y
@@ -2537,8 +2518,7 @@ SDict begin H.S end
 2638 y
 SDict begin 14.5 H.L end
  1225 2638 a 1225 2638 a
-SDict begin [ /Subtype /Link /Dest (subsection.2.2) cvn /H /I /Border
-[0 0 12] /Color [1 0 0] H.B /ANN pdfmark end
+SDict begin [ /Subtype /Link /Dest (subsection.2.2) cvn /H /I /Border [0 0 12] /Color [1 0 0] H.B /ANN pdfmark end
  1225 2638 a 89 w Fh(.)50
 b(.)g(.)f(.)h(.)g(.)g(.)g(.)f(.)h(.)g(.)g(.)g(.)f(.)h(.)g(.)g(.)g(.)f
 (.)h(.)g(.)g(.)g(.)g(.)141 b(7)431 2759 y
@@ -2547,8 +2527,7 @@ SDict begin H.S end
 Fh(2.2.1)111 b(Usage)995 2759 y
 SDict begin 14.5 H.L end
  995 2759 a 995 2759 a
-SDict begin [ /Subtype /Link /Dest (subsubsection.2.2.1) cvn /H /I
-/Border [0 0 12] /Color [1 0 0] H.B /ANN pdfmark end
+SDict begin [ /Subtype /Link /Dest (subsubsection.2.2.1) cvn /H /I /Border [0 0 12] /Color [1 0 0] H.B /ANN pdfmark end
 
 995 2759 a 88 w Fh(.)50 b(.)g(.)g(.)g(.)g(.)f(.)h(.)g(.)g(.)g(.)f(.)h
 (.)g(.)g(.)g(.)f(.)h(.)g(.)g(.)g(.)f(.)h(.)g(.)g(.)g(.)g(.)141
@@ -2558,8 +2537,7 @@ SDict begin H.S end
 b(Details)1473 2879 y
 SDict begin 14.5 H.L end
  1473 2879 a 1473 2879 a
-SDict begin [ /Subtype /Link /Dest (subsubsection.2.2.2) cvn /H /I
-/Border [0 0 12] /Color [1 0 0] H.B /ANN pdfmark end
+SDict begin [ /Subtype /Link /Dest (subsubsection.2.2.2) cvn /H /I /Border [0 0 12] /Color [1 0 0] H.B /ANN pdfmark end
  1473 2879
 a 71 w Fh(.)50 b(.)g(.)g(.)g(.)f(.)h(.)g(.)g(.)g(.)f(.)h(.)g(.)g(.)g(.)
 f(.)h(.)g(.)g(.)g(.)g(.)141 b(8)60 3097 y
@@ -2569,8 +2547,7 @@ b(F)-9 b(uture)38 b(Dev)m(elopmen)m(t)g(Ideas)1501 3097
 y
 SDict begin 14.5 H.L end
  1501 3097 a 1501 3097 a
-SDict begin [ /Subtype /Link /Dest (section.3) cvn /H /I /Border [0
-0 12] /Color [1 0 0] H.B /ANN pdfmark end
+SDict begin [ /Subtype /Link /Dest (section.3) cvn /H /I /Border [0 0 12] /Color [1 0 0] H.B /ANN pdfmark end
  1501 3097 a 1685 w Fi(10)60
 3430 y Fj(Abstract)60 3528 y
 SDict begin H.S end
@@ -2578,8 +2555,7 @@ SDict begin H.S end
 SDict begin 14.5 H.A end
  60 3528
 a 60 3528 a
-SDict begin [ /View [/XYZ H.V] /Dest (section*.2) cvn H.B /DEST pdfmark
-end
+SDict begin [ /View [/XYZ H.V] /Dest (section*.2) cvn H.B /DEST pdfmark end
  60 3528 a 121 x Fh(Soft)m(w)m(are)30 b(dev)m(elopmen)m(t)i
 (for)e(pro)s(duction)f(systems)j(presen)m(ts)g(a)d(c)m(hallenge)i(to)f
 (the)g(de-)60 3769 y(v)m(elopmen)m(t)35 b(team)f(as)g(the)f(qualit)m(y)
@@ -2606,18 +2582,14 @@ m(v)m(o)s(cations.)51 b(A)60 4852 y(test)34 b(case)h(can)f(b)s(e)g
 y Fh(1)p eop end
 %%Page: 2 2
 TeXDict begin 2 1 bop 0 0 a
-SDict begin /product where{pop product(Distiller)search{pop pop pop
-version(.)search{exch pop exch pop(3011)eq{gsave newpath 0 0 moveto
-closepath clip/Courier findfont 10 scalefont setfont 72 72 moveto(.)show
-grestore}if}{pop}ifelse}{pop}ifelse}if end
+SDict begin /product where{pop product(Distiller)search{pop pop pop version(.)search{exch pop exch pop(3011)eq{gsave newpath 0 0 moveto closepath clip/Courier findfont 10 scalefont setfont 72 72 moveto(.)show grestore}if}{pop}ifelse}{pop}ifelse}if end
  0 0 a 60 166 a
 SDict begin H.S end
  60 166 a 60
 166 a
 SDict begin H.R end
  60 166 a 60 166 a
-SDict begin [ /View [/XYZ H.V] /Dest (page.2) cvn H.B /DEST pdfmark
-end
+SDict begin [ /View [/XYZ H.V] /Dest (page.2) cvn H.B /DEST pdfmark end
  60 166 a 127 x Fh(a)32 b(feature)h(that)f(is)g
 (necessary)j(for)d(parallel)g(dev)m(elopmen)m(t)i(of)e(functionalit)m
 (y)h(and)f(test)60 414 y(cases.)46 b(On)33 b(a)g(second)h(lev)m(el)h
@@ -2650,8 +2622,7 @@ SDict begin H.S end
 60 2027 a 60 2027 a
 SDict begin 14.5 H.A end
  60 2027 a 60 2027 a
-SDict begin [ /View [/XYZ H.V] /Dest (section.1) cvn H.B /DEST pdfmark
-end
+SDict begin [ /View [/XYZ H.V] /Dest (section.1) cvn H.B /DEST pdfmark end
  60 2027 a 164
 x Fj(1)161 b(In)l(tro)t(duction)60 2410 y Fh(The)36 b(imp)s(ortance)f
 (of)g(soft)m(w)m(are)h(testing)f(can)g(hardly)h(b)s(e)f(o)m(v)m
@@ -2681,8 +2652,7 @@ SDict begin H.S end
 3669 y
 SDict begin H.R end
  603 3669 a 603 3734 a
-SDict begin [ /Color [0 1 0] /H /I /Border [0 0 12] /Subtype /Link
-/Dest (cite.xp) cvn H.B /ANN pdfmark end
+SDict begin [ /Color [0 1 0] /H /I /Border [0 0 12] /Subtype /Link /Dest (cite.xp) cvn H.B /ANN pdfmark end
  603 3734 a Fh(])g(and)h(T)-8
 b(est-First)39 b(paradigms)h(where)g(test)g(cases)h(are)e(view)m(ed)j
 (as)e(the)60 3854 y(essen)m(tial)f(guidelines)g(for)e(the)h(dev)m
@@ -2701,18 +2671,14 @@ g(b)m(y)304 5029 y(some)j(test)g(case.)1655 5358 y(2)p
 eop end
 %%Page: 3 3
 TeXDict begin 3 2 bop 0 0 a
-SDict begin /product where{pop product(Distiller)search{pop pop pop
-version(.)search{exch pop exch pop(3011)eq{gsave newpath 0 0 moveto
-closepath clip/Courier findfont 10 scalefont setfont 72 72 moveto(.)show
-grestore}if}{pop}ifelse}{pop}ifelse}if end
+SDict begin /product where{pop product(Distiller)search{pop pop pop version(.)search{exch pop exch pop(3011)eq{gsave newpath 0 0 moveto closepath clip/Courier findfont 10 scalefont setfont 72 72 moveto(.)show grestore}if}{pop}ifelse}{pop}ifelse}if end
  0 0 a 60 166 a
 SDict begin H.S end
  60 166 a 60
 166 a
 SDict begin H.R end
  60 166 a 60 166 a
-SDict begin [ /View [/XYZ H.V] /Dest (page.3) cvn H.B /DEST pdfmark
-end
+SDict begin [ /View [/XYZ H.V] /Dest (page.3) cvn H.B /DEST pdfmark end
  60 166 a 206 293 a Fh(T)-8 b(esting)30
 b(framew)m(orks)h(that)e(address)h(these)g(asp)s(ects)g(ha)m(v)m(e)h(b)
 s(een)f(written)f(in)h(a)f(v)-5 b(a-)60 414 y(riet)m(y)34
@@ -2725,8 +2691,7 @@ SDict begin H.S end
 SDict begin H.R end
  1291 469 a 1291 534
 a
-SDict begin [ /Color [0 1 0] /H /I /Border [0 0 12] /Subtype /Link
-/Dest (cite.beck) cvn H.B /ANN pdfmark end
+SDict begin [ /Color [0 1 0] /H /I /Border [0 0 12] /Subtype /Link /Dest (cite.beck) cvn H.B /ANN pdfmark end
  1291 534 a Fh(])g(has)h(turned)g(out)f(to)g(b)s(e)g(v)m(ery)i
 (successful,)i(leading)60 654 y({)35 b(among)h(others)g({)f(to)h(the)g
 (p)s(opular)f(JUnit)h(library)f(for)g(Ja)m(v)-5 b(a)36
@@ -2736,8 +2701,7 @@ SDict begin H.S end
 SDict begin H.R end
  2551 589 a
 2551 654 a
-SDict begin [ /Color [0 1 0] /H /I /Border [0 0 12] /Subtype /Link
-/Dest (cite.junit) cvn H.B /ANN pdfmark end
+SDict begin [ /Color [0 1 0] /H /I /Border [0 0 12] /Subtype /Link /Dest (cite.junit) cvn H.B /ANN pdfmark end
  2551 654 a Fh(],)g(whic)m(h)h(has)f(b)s(een)60
 775 y(p)s(orted)28 b(to)f(man)m(y)i(other)f(languages)g(\(see)h([)1650
 775 y
@@ -2746,8 +2710,7 @@ SDict begin H.S end
 SDict begin H.R end
  1698 710 a 1698 775
 a
-SDict begin [ /Color [0 1 0] /H /I /Border [0 0 12] /Subtype /Link
-/Dest (cite.xp) cvn H.B /ANN pdfmark end
+SDict begin [ /Color [0 1 0] /H /I /Border [0 0 12] /Subtype /Link /Dest (cite.xp) cvn H.B /ANN pdfmark end
  1698 775 a Fh(])g(for)e(an)h(extensiv)m(e)i(list)f(of)e(testing)h
 (frame-)60 895 y(w)m(orks)34 b(for)d(all)h(kinds)i(of)e(languages\).)42
 b(Accordingly)-8 b(,)33 b(the)g(R)m(Unit)f(pac)m(k)-5
@@ -2757,8 +2720,7 @@ SDict begin H.S end
  736 1016 a Fh(5)785 950 y
 SDict begin H.R end
  785 950 a 785 1016 a
-SDict begin [ /Color [0 1 0] /H /I /Border [0 0 12] /Subtype /Link
-/Dest (cite.runit-sf) cvn H.B /ANN pdfmark end
+SDict begin [ /Color [0 1 0] /H /I /Border [0 0 12] /Subtype /Link /Dest (cite.runit-sf) cvn H.B /ANN pdfmark end
 
 785 1016 a Fh(]\))g(is)g(our)g(v)m(ersion)i(of)d(p)s(orting)h(JUnit)g
 (to)g(R,)g(supplemen)m(ted)i(b)m(y)60 1136 y(additional)34
@@ -2808,8 +2770,7 @@ SDict begin H.S end
 4134 y
 SDict begin H.R end
  2270 4134 a 2270 4199 a
-SDict begin [ /Color [0 1 0] /H /I /Border [0 0 12] /Subtype /Link
-/Dest (cite.tfg) cvn H.B /ANN pdfmark end
+SDict begin [ /Color [0 1 0] /H /I /Border [0 0 12] /Subtype /Link /Dest (cite.tfg) cvn H.B /ANN pdfmark end
  2270 4199 a Fh(]\):)206
 4403 y Fe(\210)49 b Fh(Dev)m(elop)40 b(test)h(cases)g(parallel)f(to)f
 (implemen)m(ting)i(y)m(our)g(functionalit)m(y)-8 b(.)65
@@ -2825,18 +2786,14 @@ b(Unit)41 b(tests)h(should)g(b)s(e)304 5088 y(as)31 b(small)h(as)f(p)s
 (that)f(cannot)g(b)s(e)1655 5358 y(3)p eop end
 %%Page: 4 4
 TeXDict begin 4 3 bop 0 0 a
-SDict begin /product where{pop product(Distiller)search{pop pop pop
-version(.)search{exch pop exch pop(3011)eq{gsave newpath 0 0 moveto
-closepath clip/Courier findfont 10 scalefont setfont 72 72 moveto(.)show
-grestore}if}{pop}ifelse}{pop}ifelse}if end
+SDict begin /product where{pop product(Distiller)search{pop pop pop version(.)search{exch pop exch pop(3011)eq{gsave newpath 0 0 moveto closepath clip/Courier findfont 10 scalefont setfont 72 72 moveto(.)show grestore}if}{pop}ifelse}{pop}ifelse}if end
  0 0 a 60 166 a
 SDict begin H.S end
  60 166 a 60
 166 a
 SDict begin H.R end
  60 166 a 60 166 a
-SDict begin [ /View [/XYZ H.V] /Dest (page.4) cvn H.B /DEST pdfmark
-end
+SDict begin [ /View [/XYZ H.V] /Dest (page.4) cvn H.B /DEST pdfmark end
  60 166 a 304 293 a Fh(further)30
 b(decomp)s(osed.)44 b(In)m(tegration)30 b(tests,)i(on)e(the)h(other)f
 (hand,)h(run)f(through)304 414 y(a)36 b(whole)h(analysis)g(w)m
@@ -2892,8 +2849,7 @@ SDict begin H.S end
  60 3925 a 60 3925 a
 SDict begin 14.5 H.A end
  60 3925 a 60 3925 a
-SDict begin [ /View [/XYZ H.V] /Dest (section.2) cvn H.B /DEST pdfmark
-end
+SDict begin [ /View [/XYZ H.V] /Dest (section.2) cvn H.B /DEST pdfmark end
  60 3925
 a 163 x Fj(2)161 b(The)53 b(R)l(Unit)g(pac)l(k)-9 b(age)60
 4307 y Fh(This)29 b(section)g(con)m(tains)f(a)g(detailed)g(explanation)
@@ -2910,26 +2866,21 @@ m(y)g(some)g(test)f(case.)46 b(Both)33 b(comp)s(onen)m(ts)h(are)60
 eop end
 %%Page: 5 5
 TeXDict begin 5 4 bop 0 0 a
-SDict begin /product where{pop product(Distiller)search{pop pop pop
-version(.)search{exch pop exch pop(3011)eq{gsave newpath 0 0 moveto
-closepath clip/Courier findfont 10 scalefont setfont 72 72 moveto(.)show
-grestore}if}{pop}ifelse}{pop}ifelse}if end
+SDict begin /product where{pop product(Distiller)search{pop pop pop version(.)search{exch pop exch pop(3011)eq{gsave newpath 0 0 moveto closepath clip/Courier findfont 10 scalefont setfont 72 72 moveto(.)show grestore}if}{pop}ifelse}{pop}ifelse}if end
  0 0 a 60 166 a
 SDict begin H.S end
  60 166 a 60
 166 a
 SDict begin H.R end
  60 166 a 60 166 a
-SDict begin [ /View [/XYZ H.V] /Dest (page.5) cvn H.B /DEST pdfmark
-end
+SDict begin [ /View [/XYZ H.V] /Dest (page.5) cvn H.B /DEST pdfmark end
  60 166 a 60 194 a
 SDict begin H.S end
  60 194 a 60
 194 a
 SDict begin 14.5 H.A end
  60 194 a 60 194 a
-SDict begin [ /View [/XYZ H.V] /Dest (subsection.2.1) cvn H.B /DEST
-pdfmark end
+SDict begin [ /View [/XYZ H.V] /Dest (subsection.2.1) cvn H.B /DEST pdfmark end
  60 194 a 99 x Fc(2.1)135 b(T)-11
 b(est)45 b(case)g(execution)60 478 y Fh(The)31 b(basic)g(idea)f(of)f
 (this)i(comp)s(onen)m(t)f(is)h(to)e(execute)j(a)e(set)g(of)g(test)g
@@ -2996,18 +2947,14 @@ Fb(/foo/bar/)p Fh(.)60 5108 y(T)-8 b(o)33 b(create)f(the)h(corresp)s
 1655 5358 y(5)p eop end
 %%Page: 6 6
 TeXDict begin 6 5 bop 0 0 a
-SDict begin /product where{pop product(Distiller)search{pop pop pop
-version(.)search{exch pop exch pop(3011)eq{gsave newpath 0 0 moveto
-closepath clip/Courier findfont 10 scalefont setfont 72 72 moveto(.)show
-grestore}if}{pop}ifelse}{pop}ifelse}if end
+SDict begin /product where{pop product(Distiller)search{pop pop pop version(.)search{exch pop exch pop(3011)eq{gsave newpath 0 0 moveto closepath clip/Courier findfont 10 scalefont setfont 72 72 moveto(.)show grestore}if}{pop}ifelse}{pop}ifelse}if end
  0 0 a 60 166 a
 SDict begin H.S end
  60 166 a 60
 166 a
 SDict begin H.R end
  60 166 a 60 166 a
-SDict begin [ /View [/XYZ H.V] /Dest (page.6) cvn H.B /DEST pdfmark
-end
+SDict begin [ /View [/XYZ H.V] /Dest (page.6) cvn H.B /DEST pdfmark end
  60 166 a 127 x Fa(testsuite.c2f)55
 b(<-)d(defineTestSuite\("c2f",)947 414 y(dirs)h(=)g
 (file.path\(path.package\(package=")q(RUnit)q("\),)1522
@@ -3033,8 +2980,7 @@ SDict begin H.S end
  60 2816 a 60 2816 a
 SDict begin 14.5 H.A end
  60 2816 a 60 2816 a
-SDict begin [ /View [/XYZ H.V] /Dest (Item.1) cvn H.B /DEST pdfmark
-end
+SDict begin [ /View [/XYZ H.V] /Dest (Item.1) cvn H.B /DEST pdfmark end
 
 60 2816 a 179 2958 a Fh(1.)49 b(create)33 b(as)f(man)m(y)i(test)f
 (functions)g(in)f(as)h(man)m(y)g(test)g(\014les)g(as)g(necessary)60
@@ -3043,8 +2989,7 @@ SDict begin H.S end
  60 3019 a 60 3019 a
 SDict begin 14.5 H.A end
  60 3019 a 60 3019 a
-SDict begin [ /View [/XYZ H.V] /Dest (Item.2) cvn H.B /DEST pdfmark
-end
+SDict begin [ /View [/XYZ H.V] /Dest (Item.2) cvn H.B /DEST pdfmark end
  60 3019
 a 179 3162 a Fh(2.)49 b(create)37 b(one)g(or)f(more)h(test)g(suites)h
 (using)f(the)g(help)s(er)g(function)g Fb(defineTest-)304
@@ -3054,8 +2999,7 @@ SDict begin H.S end
 SDict begin 14.5 H.A end
  60 3324 a
 60 3324 a
-SDict begin [ /View [/XYZ H.V] /Dest (Item.3) cvn H.B /DEST pdfmark
-end
+SDict begin [ /View [/XYZ H.V] /Dest (Item.3) cvn H.B /DEST pdfmark end
  60 3324 a 179 3485 a Fh(3.)49 b(run)32 b(the)h(test)g(suites)
 h(with)f Fb(runTestSuite)60 3527 y
 SDict begin H.S end
@@ -3063,8 +3007,7 @@ SDict begin H.S end
 a
 SDict begin 14.5 H.A end
  60 3527 a 60 3527 a
-SDict begin [ /View [/XYZ H.V] /Dest (Item.4) cvn H.B /DEST pdfmark
-end
+SDict begin [ /View [/XYZ H.V] /Dest (Item.4) cvn H.B /DEST pdfmark end
  60 3527 a 179 3689 a Fh(4.)49 b(prin)m(t)29
 b(the)g(test)g(proto)s(col)e(either)i(with)g Fb(printTextProtocol)j
 Fh(or)d(with)g Fb(print-)304 3809 y(HTMLProtocol)35 b
@@ -3088,18 +3031,14 @@ b(test)h(functions)g(start)f(with)h Fb(test)h Fh(and)e(\014les)h(with)g
 Fb(runit)p Fh(.)1655 5358 y(6)p eop end
 %%Page: 7 7
 TeXDict begin 7 6 bop 0 0 a
-SDict begin /product where{pop product(Distiller)search{pop pop pop
-version(.)search{exch pop exch pop(3011)eq{gsave newpath 0 0 moveto
-closepath clip/Courier findfont 10 scalefont setfont 72 72 moveto(.)show
-grestore}if}{pop}ifelse}{pop}ifelse}if end
+SDict begin /product where{pop product(Distiller)search{pop pop pop version(.)search{exch pop exch pop(3011)eq{gsave newpath 0 0 moveto closepath clip/Courier findfont 10 scalefont setfont 72 72 moveto(.)show grestore}if}{pop}ifelse}{pop}ifelse}if end
  0 0 a 60 166 a
 SDict begin H.S end
  60 166 a 60
 166 a
 SDict begin H.R end
  60 166 a 60 166 a
-SDict begin [ /View [/XYZ H.V] /Dest (page.7) cvn H.B /DEST pdfmark
-end
+SDict begin [ /View [/XYZ H.V] /Dest (page.7) cvn H.B /DEST pdfmark end
  60 166 a 206 293 a Fe(\210)49
 b Fh(R)m(Unit)31 b(mak)m(es)i(a)e(distinction)h(b)s(et)m(w)m(een)h
 (failures)f(and)f(error.)43 b(A)31 b(failure)g(o)s(ccurs)304
@@ -3144,8 +3083,7 @@ SDict begin H.S end
  60 3192 a 60 3192 a
 SDict begin 14.5 H.A end
  60 3192 a 60 3192 a
-SDict begin [ /View [/XYZ H.V] /Dest (subsection.2.2) cvn H.B /DEST
-pdfmark end
+SDict begin [ /View [/XYZ H.V] /Dest (subsection.2.2) cvn H.B /DEST pdfmark end
  60 3192
 a 130 x Fc(2.2)135 b(R)45 b(Co)t(de)g(Insp)t(ection)60
 3506 y Fh(The)26 b(Co)s(de)f(Insp)s(ector)h(is)f(an)g(additional)f(to)s
@@ -3177,18 +3115,14 @@ b(holds)e(the)f(result)g(of)f(the)i(co)s(de)f(trac)m(king.)1655
 5358 y(7)p eop end
 %%Page: 8 8
 TeXDict begin 8 7 bop 0 0 a
-SDict begin /product where{pop product(Distiller)search{pop pop pop
-version(.)search{exch pop exch pop(3011)eq{gsave newpath 0 0 moveto
-closepath clip/Courier findfont 10 scalefont setfont 72 72 moveto(.)show
-grestore}if}{pop}ifelse}{pop}ifelse}if end
+SDict begin /product where{pop product(Distiller)search{pop pop pop version(.)search{exch pop exch pop(3011)eq{gsave newpath 0 0 moveto closepath clip/Courier findfont 10 scalefont setfont 72 72 moveto(.)show grestore}if}{pop}ifelse}{pop}ifelse}if end
  0 0 a 60 166 a
 SDict begin H.S end
  60 166 a 60
 166 a
 SDict begin H.R end
  60 166 a 60 166 a
-SDict begin [ /View [/XYZ H.V] /Dest (page.8) cvn H.B /DEST pdfmark
-end
+SDict begin [ /View [/XYZ H.V] /Dest (page.8) cvn H.B /DEST pdfmark end
  60 166 a 127 x Fh(The)46 b(result)f(of)g(the)g
 (trac)m(king)g(pro)s(cess)h(allo)m(ws)f(further)g(analysis)h(of)e(the)h
 (executed)60 414 y(co)s(de.)60 552 y
@@ -3197,8 +3131,7 @@ SDict begin H.S end
 a
 SDict begin 14.5 H.A end
  60 552 a 60 552 a
-SDict begin [ /View [/XYZ H.V] /Dest (subsubsection.2.2.1) cvn H.B
-/DEST pdfmark end
+SDict begin [ /View [/XYZ H.V] /Dest (subsubsection.2.2.1) cvn H.B /DEST pdfmark end
  60 552 a 121 x Fi(2.2.1)112 b(Usage)60
 857 y Fh(The)32 b(usage)g(of)f(the)h(Co)s(de)g(Insp)s(ector)g(and)f
 (the)h(T)-8 b(rac)m(k)m(er)33 b(ob)5 b(ject)32 b(is)g(v)m(ery)h
@@ -3234,18 +3167,14 @@ g(of)f(the)h(T)-8 b(rac)m(k)m(er\))40 b(will)f(b)s(e)g(returned)h(as)
 1655 5358 y(8)p eop end
 %%Page: 9 9
 TeXDict begin 9 8 bop 0 0 a
-SDict begin /product where{pop product(Distiller)search{pop pop pop
-version(.)search{exch pop exch pop(3011)eq{gsave newpath 0 0 moveto
-closepath clip/Courier findfont 10 scalefont setfont 72 72 moveto(.)show
-grestore}if}{pop}ifelse}{pop}ifelse}if end
+SDict begin /product where{pop product(Distiller)search{pop pop pop version(.)search{exch pop exch pop(3011)eq{gsave newpath 0 0 moveto closepath clip/Courier findfont 10 scalefont setfont 72 72 moveto(.)show grestore}if}{pop}ifelse}{pop}ifelse}if end
  0 0 a 60 166 a
 SDict begin H.S end
  60 166 a 60
 166 a
 SDict begin H.R end
  60 166 a 60 166 a
-SDict begin [ /View [/XYZ H.V] /Dest (page.9) cvn H.B /DEST pdfmark
-end
+SDict begin [ /View [/XYZ H.V] /Dest (page.9) cvn H.B /DEST pdfmark end
  60 166 a 127 x Fh(usual.)43 b(The)30
 b(trac)m(king)g(results)h(will)f(receiv)m(ed)i(b)m(y)e
 (tr$getResult\(\).)42 b(With)30 b Fb(printHTML)60 414
@@ -3256,8 +3185,7 @@ SDict begin H.S end
 60 572 a
 SDict begin 14.5 H.A end
  60 572 a 60 572 a
-SDict begin [ /View [/XYZ H.V] /Dest (subsubsection.2.2.2) cvn H.B
-/DEST pdfmark end
+SDict begin [ /View [/XYZ H.V] /Dest (subsubsection.2.2.2) cvn H.B /DEST pdfmark end
  60 572 a 101 x Fi(2.2.2)112
 b(T)-9 b(ec)m(hnical)38 b(Details)60 858 y Fh(The)i(general)f(idea)h
 (for)e(the)i(co)s(de)f(trac)m(king)h(is)g(to)f(mo)s(dify)g(the)g
@@ -3293,18 +3221,14 @@ b(co)s(de)g(lines)g(are:)60 4789 y Fa(>)52 b(if)h(\(any\(a)g(==)g
 y Fh(9)p eop end
 %%Page: 10 10
 TeXDict begin 10 9 bop 0 0 a
-SDict begin /product where{pop product(Distiller)search{pop pop pop
-version(.)search{exch pop exch pop(3011)eq{gsave newpath 0 0 moveto
-closepath clip/Courier findfont 10 scalefont setfont 72 72 moveto(.)show
-grestore}if}{pop}ifelse}{pop}ifelse}if end
+SDict begin /product where{pop product(Distiller)search{pop pop pop version(.)search{exch pop exch pop(3011)eq{gsave newpath 0 0 moveto closepath clip/Courier findfont 10 scalefont setfont 72 72 moveto(.)show grestore}if}{pop}ifelse}{pop}ifelse}if end
  0 0 a 60 166 a
 SDict begin H.S end
  60 166 a
 60 166 a
 SDict begin H.R end
  60 166 a 60 166 a
-SDict begin [ /View [/XYZ H.V] /Dest (page.10) cvn H.B /DEST pdfmark
-end
+SDict begin [ /View [/XYZ H.V] /Dest (page.10) cvn H.B /DEST pdfmark end
  60 166 a 127 x Fh(This)33
 b(m)m(ust)h(b)s(e)e(mo)s(di\014ed)h(to)60 497 y Fa(>)52
 b(if)h(\(any\(a)g(==)g(1\)\))g({)60 617 y(+)261 b(track$bp\(2\))60
@@ -3318,8 +3242,7 @@ SDict begin H.S end
  60 1693 a 60 1693 a
 SDict begin 14.5 H.A end
  60 1693 a 60 1693 a
-SDict begin [ /View [/XYZ H.V] /Dest (section.3) cvn H.B /DEST pdfmark
-end
+SDict begin [ /View [/XYZ H.V] /Dest (section.3) cvn H.B /DEST pdfmark end
  60 1693 a 182
 x Fj(3)161 b(F)-13 b(uture)52 b(Dev)l(elopmen)l(t)f(Ideas)60
 2094 y Fh(Here)26 b(w)m(e)g(brie\015y)g(list)g({)f(in)g(an)g(unordered)
@@ -3346,8 +3269,7 @@ SDict begin H.S end
 SDict begin H.R end
  3114 3445
 a 3114 3510 a
-SDict begin [ /Color [0 1 0] /H /I /Border [0 0 12] /Subtype /Link
-/Dest (cite.junit) cvn H.B /ANN pdfmark end
+SDict begin [ /Color [0 1 0] /H /I /Border [0 0 12] /Subtype /Link /Dest (cite.junit) cvn H.B /ANN pdfmark end
  3114 3510 a Fh(])g(for)304 3630 y(v)-5
 b(arious)32 b(approac)m(hes)h(in)g(other)f(languages.)206
 3834 y Fe(\210)49 b Fh(impro)m(v)m(e)43 b(the)e(exp)s(ort)h(of)f(test)h
@@ -3364,34 +3286,28 @@ b Fh(allo)m(w)33 b(automatic)f(registration)f(of)h(functions)h(&)g
 (metho)s(ds.)1630 5358 y(10)p eop end
 %%Page: 11 11
 TeXDict begin 11 10 bop 0 0 a
-SDict begin /product where{pop product(Distiller)search{pop pop pop
-version(.)search{exch pop exch pop(3011)eq{gsave newpath 0 0 moveto
-closepath clip/Courier findfont 10 scalefont setfont 72 72 moveto(.)show
-grestore}if}{pop}ifelse}{pop}ifelse}if end
+SDict begin /product where{pop product(Distiller)search{pop pop pop version(.)search{exch pop exch pop(3011)eq{gsave newpath 0 0 moveto closepath clip/Courier findfont 10 scalefont setfont 72 72 moveto(.)show grestore}if}{pop}ifelse}{pop}ifelse}if end
  0 0 a 60 166 a
 SDict begin H.S end
  60 166 a
 60 166 a
 SDict begin H.R end
  60 166 a 60 166 a
-SDict begin [ /View [/XYZ H.V] /Dest (page.11) cvn H.B /DEST pdfmark
-end
+SDict begin [ /View [/XYZ H.V] /Dest (page.11) cvn H.B /DEST pdfmark end
  60 166 a 127 x Fj(References)60
 392 y
 SDict begin H.S end
  60 392 a 60 392 a
 SDict begin 14.5 H.A end
  60 392 a 60 392 a
-SDict begin [ /View [/XYZ H.V] /Dest (section*.3) cvn H.B /DEST pdfmark
-end
+SDict begin [ /View [/XYZ H.V] /Dest (section*.3) cvn H.B /DEST pdfmark end
  60 392 a 60
 350 a
 SDict begin H.S end
  60 350 a 60 350 a
 SDict begin 14.5 H.A end
  60 350 a 60 350 a
-SDict begin [ /View [/XYZ H.V] /Dest (cite.xp) cvn H.B /DEST pdfmark
-end
+SDict begin [ /View [/XYZ H.V] /Dest (cite.xp) cvn H.B /DEST pdfmark end
  60 350 a 109
 512 a Fh([1])48 b(h)m(ttp://www.xprogramming.com)60 579
 y
@@ -3399,8 +3315,7 @@ SDict begin H.S end
  60 579 a 60 579 a
 SDict begin 14.5 H.A end
  60 579 a 60 579 a
-SDict begin [ /View [/XYZ H.V] /Dest (cite.beck) cvn H.B /DEST pdfmark
-end
+SDict begin [ /View [/XYZ H.V] /Dest (cite.beck) cvn H.B /DEST pdfmark end
  60 579 a 109 716
 a Fh([2])g(h)m(ttp://www.xprogramming.com/testfram.h)m(tm)60
 782 y
@@ -3408,8 +3323,7 @@ SDict begin H.S end
  60 782 a 60 782 a
 SDict begin 14.5 H.A end
  60 782 a 60 782 a
-SDict begin [ /View [/XYZ H.V] /Dest (cite.junit) cvn H.B /DEST pdfmark
-end
+SDict begin [ /View [/XYZ H.V] /Dest (cite.junit) cvn H.B /DEST pdfmark end
  60 782 a 109
 919 a Fh([3])g(h)m(ttp://www.junit.org/)60 985 y
 SDict begin H.S end
@@ -3417,8 +3331,7 @@ SDict begin H.S end
 a 60 985 a
 SDict begin 14.5 H.A end
  60 985 a 60 985 a
-SDict begin [ /View [/XYZ H.V] /Dest (cite.tfg) cvn H.B /DEST pdfmark
-end
+SDict begin [ /View [/XYZ H.V] /Dest (cite.tfg) cvn H.B /DEST pdfmark end
  60 985 a 109 1122 a Fh([4])g(h)m
 (ttp://www.xprogramming.com/xpmag/testFirstGuidelines.h)m(tm)60
 1189 y
@@ -3426,8 +3339,7 @@ SDict begin H.S end
  60 1189 a 60 1189 a
 SDict begin 14.5 H.A end
  60 1189 a 60 1189 a
-SDict begin [ /View [/XYZ H.V] /Dest (cite.runit-sf) cvn H.B /DEST
-pdfmark end
+SDict begin [ /View [/XYZ H.V] /Dest (cite.runit-sf) cvn H.B /DEST pdfmark end
  60 1189
 a 109 1326 a Fh([5])g(h)m(ttps://sourceforge.net/pro)5
 b(jects/runit/)1630 5358 y(11)p eop end

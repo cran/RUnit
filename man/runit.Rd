@@ -15,7 +15,7 @@
 %%  along with this program; if not, write to the Free Software
 %%  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 
-%%  $Id: runit.Rd,v 1.14 2007/05/21 11:34:30 burgerm Exp $
+%%  $Id: runit.Rd,v 1.15 2008/06/19 11:42:53 burgerm Exp $
 
 \encoding{latin1}
 \name{runTestSuite}
@@ -171,6 +171,10 @@ testResult <- runTestSuite(myTestSuite)
 ## prints detailed text protocol
 ## to standard out:
 printTextProtocol(testResult, showDetails=TRUE)
+
+##  for single test files, e.g. outside a package context
+testResult2 <- runTestFile(file.path(system.file("examples", package="RUnit"), "correctTestCase.r"))
+printTextProtocol(testResult2, showDetails=TRUE)
 }
 
 \keyword{programming}

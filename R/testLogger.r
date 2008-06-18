@@ -15,7 +15,7 @@
 ##  along with this program; if not, write to the Free Software
 ##  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 
-##  $Id: testLogger.r,v 1.12 2007/04/09 17:38:35 burgerm Exp $
+##  $Id: testLogger.r,v 1.14 2008/06/18 17:13:49 burgerm Exp $
 
 
 .newTestLogger <- function(useOwnErrorHandler) {
@@ -132,7 +132,7 @@
     .testData[[.currentTestSuiteName]]$nTestFunc <<- 1 + .testData[[.currentTestSuiteName]]$nTestFunc
 
     .testData[[.currentTestSuiteName]]$sourceFileResults[[.currentSourceFileName]][[testFuncName]] <<-
-      list(kind="success", time=secs)
+      list(kind="success", checkNum=.checkNum, time=secs)
   }
 
   addError <- function(testFuncName, errorMsg) {
@@ -146,7 +146,7 @@
     .testData[[.currentTestSuiteName]]$nErr <<- 1 + .testData[[.currentTestSuiteName]]$nErr
 
     .testData[[.currentTestSuiteName]]$sourceFileResults[[.currentSourceFileName]][[testFuncName]] <<-
-      list(kind="error", msg=errorMsg, traceBack=.currentTraceBack)
+      list(kind="error", msg=errorMsg, checkNum=.checkNum, traceBack=.currentTraceBack)
   }
 
   addFailure <- function(testFuncName, failureMsg) {
@@ -172,10 +172,20 @@
 
     .testData[[.currentTestSuiteName]]$nDeactivated <<- 1 + .testData[[.currentTestSuiteName]]$nDeactivated
     .testData[[.currentTestSuiteName]]$sourceFileResults[[.currentSourceFileName]][[testFuncName]] <<-
-      list(kind="deactivated", msg=.deactivationMsg)
+      list(kind="deactivated", msg=.deactivationMsg, checkNum=.checkNum)
   }
 
+  addCheckNum <- function(testFuncName) {
+    ##@bdescr
+    ## add total number of checks performed 
+    ##@edescr
+    ##@in testFuncName : [character] name of test function
 
+
+    .testData[[.currentTestSuiteName]]$sourceFileResults[[.currentSourceFileName]][[testFuncName]]$checkNum <<- .checkNum
+      
+  }
+  
   cleanup <- function() {
     ##@bdescr
     ## reset book keeping variables like .failure, ...
@@ -228,7 +238,14 @@
     ##@edescr
     .checkNum <<- 1 + .checkNum
   }
-
+  
+  getCheckNum <- function() {
+    ##@bdescr
+    ##  return counter value for total num of test cases
+    ##@edescr
+    return(.checkNum)
+  }
+  
   return(list(getTestData=getTestData,
               setCurrentTestSuite=setCurrentTestSuite,
               setCurrentSourceFile=setCurrentSourceFile,
@@ -236,11 +253,13 @@
               addError=function(testFuncName, errorMsg) addError(testFuncName, errorMsg),
               addFailure=function(testFuncName, failureMsg) addFailure(testFuncName, failureMsg),
               addDeactivated=function(testFuncName) addDeactivated(testFuncName),
+              addCheckNum=function(testFuncName) addCheckNum(testFuncName),
               isFailure=isFailure,
               setFailure=setFailure,
               isDeactivated=isDeactivated,
               setDeactivated=function(msg) setDeactivated(msg),
               incrementCheckNum=incrementCheckNum,
+              getCheckNum=getCheckNum,
               cleanup=cleanup))
 }
 
@@ -259,7 +278,7 @@ getErrors <- function(testData) {
     stop("getErrors needs an object of class 'RUnitTestData' as argument.")
   }
   ret <- list(nErr=0, nDeactivated=0, nFail=0, nTestFunc=0)
-  for(i in seq(length=length(testData))) {
+  for(i in seq_along(testData)) {
     ret$nErr <- ret$nErr + testData[[i]]$nErr
     ret$nDeactivated <- ret$nDeactivated + testData[[i]]$nDeactivated
     ret$nFail <- ret$nFail + testData[[i]]$nFail
