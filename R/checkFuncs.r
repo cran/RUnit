@@ -15,7 +15,7 @@
 ##  along with this program; if not, write to the Free Software
 ##  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 
-##  $Id: checkFuncs.r,v 1.18 2008/06/18 17:12:27 burgerm Exp $
+##  $Id: checkFuncs.r,v 1.19 2008/11/07 11:19:31 burgerm Exp $
 
 
 checkEquals <- function(target, current, msg="",
@@ -35,7 +35,9 @@ checkEquals <- function(target, current, msg="",
   ##
   ##@codestatus : testing
 
-  
+  if (missing(current)) {
+     stop("argument 'current' is missing.")
+  }
   if(!is.numeric(tolerance)) {
     stop("'tolerance' has to be a numeric value")
   }
@@ -83,7 +85,10 @@ checkEqualsNumeric <- function(target, current, msg="", tolerance = .Machine$dou
   ##@ret          : [logical] TRUE, if objects 'target' and 'current' are equal w.r.t. specified numerical tolerance, else a stop signal is issued 
   ##
   ##@codestatus : testing
-  
+
+  if (missing(current)) {
+    stop("argument 'current' is missing.")
+  }
   if(!is.numeric(tolerance)) {
     stop("'tolerance' has to be a numeric value")
   }
@@ -152,7 +157,10 @@ checkTrue <- function(expr, msg="")
   ##@ret     : [logical] TRUE, if the expression in a evaluates to TRUE, else a stop signal is issued 
   ##
   ##@codestatus : testing
-  
+
+  if (missing(expr)) {
+    stop("'expr' is missing.")
+  }
   if(exists(".testLogger", envir=.GlobalEnv)) {
     .testLogger$incrementCheckNum()
   }

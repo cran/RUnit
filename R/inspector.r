@@ -15,7 +15,7 @@
 ##  along with this program; if not, write to the Free Software
 ##  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 
-##  $Id: inspector.r,v 1.8 2007/04/12 08:29:06 burgerm Exp $
+##  $Id: inspector.r,v 1.9 2008/11/07 11:20:12 burgerm Exp $
 
 
 includeTracker <- function(fbody, track=track)
@@ -156,8 +156,7 @@ includeTracker <- function(fbody, track=track)
                    return("")
                  },USE.NAMES=FALSE)
 
-  for(i in seq(along=bpVec))
-  {
+  for(i in seq_along(bpVec)) {
     bpVec[i] <- gsub("\\(\\)",paste("(",i,")",sep=""),bpVec[i])
   }
   
