@@ -15,7 +15,7 @@
 %%  along with this program; if not, write to the Free Software
 %%  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 
-%%  $Id: tracker.Rd,v 1.11 2007/05/15 21:43:51 burgerm Exp $
+%%  $Id: tracker.Rd,v 1.12 2009/01/15 13:26:15 burgerm Exp $
 
 \encoding{latin1}
 \name{tracker}
@@ -56,13 +56,15 @@
 }
 
 \details{The 'trackInfo' S3 class object (list) has one entry for each
-function on the inspect list with the following elements:
+  function on the inspect list with the following elements:
+  \describe{
   \item{src}{The source code of the function.}
   \item{run}{The number of executions for each line of code.}
   \item{graph}{A matrix. Each element in the matrix counts how often a
     code line was called from the previous code line in the execution flow.}
   \item{nrRuns}{Counts how often the function was called.}
   \item{funcCall}{The declaration of the function.}
+  }
 }
 
 \author{Thomas \enc{König}{Koenig}, Klaus \enc{Jünemann}{Juenemann} \& Matthias Burger}

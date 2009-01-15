@@ -15,7 +15,7 @@
 %%  along with this program; if not, write to the Free Software
 %%  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 
-%%  $Id: runit.Rd,v 1.15 2008/06/19 11:42:53 burgerm Exp $
+%%  $Id: runit.Rd,v 1.16 2009/01/15 13:23:58 burgerm Exp $
 
 \encoding{latin1}
 \name{runTestSuite}
@@ -28,7 +28,7 @@
 \title{Definition and execution of RUnit test suites.}
 
 \usage{
-defineTestSuite(name, dirs, testFileRegexp="^runit.+\\.[rR]$", testFuncRegexp="^test.+", rngKind="Marsaglia-Multicarry", rngNormalKind="Kinderman-Ramage")
+defineTestSuite(name, dirs, testFileRegexp="^runit.+\\\\.[rR]$", testFuncRegexp="^test.+", rngKind="Marsaglia-Multicarry", rngNormalKind="Kinderman-Ramage")
 isValidTestSuite(testSuite)
 runTestSuite(testSuites, useOwnErrorHandler=TRUE)
 runTestFile(absFileName, useOwnErrorHandler=TRUE, testFuncRegexp="^test.+", rngKind="Marsaglia-Multicarry", rngNormalKind="Kinderman-Ramage")
