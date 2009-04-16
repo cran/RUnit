@@ -1,10 +1,9 @@
 ##  RUnit : A unit test framework for the R programming language
-##  Copyright (C) 2003-2007  Thomas Koenig, Matthias Burger, Klaus Juenemann
+##  Copyright (C) 2003-2009  Thomas Koenig, Matthias Burger, Klaus Juenemann
 ##
 ##  This program is free software; you can redistribute it and/or modify
 ##  it under the terms of the GNU General Public License as published by
-##  the Free Software Foundation; either version 2 of the License, or
-##  (at your option) any later version.
+##  the Free Software Foundation; version 2 of the License.
 ##
 ##  This program is distributed in the hope that it will be useful,
 ##  but WITHOUT ANY WARRANTY; without even the implied warranty of
@@ -15,7 +14,7 @@
 ##  along with this program; if not, write to the Free Software
 ##  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 
-##  $Id: inspector.r,v 1.9 2008/11/07 11:20:12 burgerm Exp $
+##  $Id: inspector.r,v 1.12 2009/04/22 13:50:56 burgerm Exp $
 
 
 includeTracker <- function(fbody, track=track)
@@ -60,13 +59,15 @@ includeTracker <- function(fbody, track=track)
     return(sapply(code,
                   function(line)
                   {
-                    opBr <- grep(paste("^[ ]*",kwGrep," .*[ ]+$",sep=""),line)
-                    if(length(opBr) > 0)
-                    {
+                    opBr <- grep(paste("^[ ]*",kwGrep,".*[ ]+$",sep=""), line)
+                    ##  special case if combined with assignment or math operators
+                    opBr2 <- grep(paste("(<-|=|\\+|\\-|\\*|\\/)[ ]*if[ ]*\\(",sep=""), line)
+                    if(length(opBr) > 0 || length(opBr2) > 0) {
+                      
                       return(TRUE)
                     }
                     return(FALSE)
-                  },USE.NAMES=FALSE))
+                  }, USE.NAMES=FALSE))
   }
   
   
@@ -77,9 +78,9 @@ includeTracker <- function(fbody, track=track)
     ##
     ##@edescr
     ##
-    ##@in  potLine : [character] vector of code text line(s)
+    ##@in  potLine : [logical] mask vector which line contains a one-line control construct
     ##@in  block   : [integer] vector
-    ##@in  env     : [logical] vector
+    ##@in  env     : [logical] mask vector: which line already contains a opening brace
     ##@ret         : [list] with matching element vectors: openBr & clodeBr
     ##
     ##@codestatus : internal
@@ -87,35 +88,35 @@ includeTracker <- function(fbody, track=track)
     oBr <- character(length(potLine))
     clBr <- character(length(potLine))
     
-    lineIdx <- 1
+    lineIdx <- 1L
     while(lineIdx < length(potLine))
     {
-      if(potLine[lineIdx] && !(potLine[lineIdx+1]))
-      {
+      if(potLine[lineIdx] && !(potLine[lineIdx+1])) {
         oBr[lineIdx] <- "{"
-        if (!env[lineIdx+1])
-        {
+        if (!env[lineIdx+1]) {
+          
           clBr[lineIdx+2] <- paste(clBr[lineIdx+2],"}")
-        }
-        else
-        {
+          
+        } else {
+
           bbl <- block[lineIdx]
-          endBlockIdx <- min(which((bbl >= block) & ((1:length(block)) > lineIdx)))
+          endBlockIdx <- min(which((bbl >= block) & (seq_along(block) > lineIdx)))
           clBr[endBlockIdx] <- paste(clBr[endBlockIdx],"}")
         }
-      }
-      if(potLine[lineIdx] && (potLine[lineIdx+1]))
-      {
+        
+      } else if(potLine[lineIdx] && (potLine[lineIdx+1]) ) {
         oBr[lineIdx] <- "{"
         bbl <- block[lineIdx]
-        endBlockIdx <- min(which((bbl >= block) & ((1:length(block)) > lineIdx)))
+        endBlockIdx <- min(which((bbl >= block) & (seq_along(block) > lineIdx)))
         clBr[endBlockIdx] <- paste(clBr[endBlockIdx],"}")
       }
-      lineIdx <- lineIdx + 1
+      
+      lineIdx <- lineIdx + 1L
     }
     return(list(openBr=oBr, closeBr=clBr))
   }
 
+  
   ## check for new environments
   env <- sapply(fbody[-1],
                 function(code)
@@ -129,15 +130,15 @@ includeTracker <- function(fbody, track=track)
                 },USE.NAMES=FALSE)
   
   ## check the block structure
-  block <- sapply(fbody[-1],function(x)regexpr("[^ ]",x)[1],USE.NAMES=FALSE)
+  block <- sapply(fbody[-1], function(x) regexpr("[^ ]",x)[1], USE.NAMES=FALSE)
 
   ## is 4 a convention or a rule?
   block <- (block %/% 4) + 1
 
-  ## check for if's, while's, etc. without new environment
+  ## check for if's, while's, etc.
   ol <- oneLiner(fbody[-1])
 
-  ## create brackets for new environments
+  ## create brackets for control structures without new environments
   br <- setBrackets(ol,block,env)
 
   ## create new Code
@@ -164,7 +165,7 @@ includeTracker <- function(fbody, track=track)
   newBody <- paste(bpVec,newCode)
 
   ## return signature and body
-  return(list(modFunc=c(sig,newBody),newSource = newCode))
+  return(list(modFunc=c(sig,newBody), newSource=newCode))
 }
 
 
@@ -185,7 +186,7 @@ tracker <- function()
   ##
   ##@ret  : [list] OO object with functions addFunc, getSourcee, init, bp, getTrackInfo
   ##
-  ##@codestatus : untested
+  ##@codestatus : testing
   
   ## object for information
   trackInfo <- list()
@@ -195,10 +196,10 @@ tracker <- function()
   fIdx <- 0
 
   ## old time
-  oldTime <- NULL;
+  oldTime <- NULL
 
   ## old src line
-  oldSrcLine <- 0;
+  oldSrcLine <- 0
   
   addFunc <- function(fId,src,callExpr)
   {
@@ -219,7 +220,7 @@ tracker <- function()
       stop("fId must be one character string: function name")
     }
     
-    isThere <- which(fId == names(trackInfo));
+    isThere <- which(fId == names(trackInfo))
 
     if(length(isThere) == 1)
     {
@@ -228,7 +229,7 @@ tracker <- function()
     }
     else
     {
-      fIdx <<- fIdx +1;
+      fIdx <<- fIdx + 1
       newFuncInfo <- list(src=src,
                           run=integer(length(src)),
                           time=numeric(length(src)),
@@ -237,9 +238,9 @@ tracker <- function()
                           funcCall=callExpr)
 
       ##  append strips class attribute
-      trackInfo <- append(trackInfo,list(newFuncInfo));
+      trackInfo <- append(trackInfo,list(newFuncInfo))
       
-      names(trackInfo)[fIdx] <- fId;
+      names(trackInfo)[fIdx] <- fId
       class(trackInfo) <- "trackInfo"
       ##  update global state
       trackInfo <<- trackInfo
@@ -249,8 +250,8 @@ tracker <- function()
     trackInfo[[fIdx]]$nrRuns <<- trackInfo[[fIdx]]$nrRuns + 1
     
     ## initialize local variables
-    oldSrcLine <<- 0;
-    oldTime <<- NULL;
+    oldSrcLine <<- 0
+    oldTime <<- NULL
 
     return(invisible())
   }
@@ -276,7 +277,7 @@ tracker <- function()
     ##
     ##  codestatus : internal
     
-    return(trackInfo);
+    return(trackInfo)
   }
   
   
@@ -295,7 +296,7 @@ tracker <- function()
     trackInfoInit <- list()
     class(trackInfoInit) <- "trackInfo"
     trackInfo <<- trackInfoInit
-    fIdx <<- as.integer(0)
+    fIdx <<- 0L
     
     return(invisible())
   }
@@ -326,7 +327,7 @@ tracker <- function()
     ## cumulative processing time
     if(!is.null(oldTime))
     {
-      dtime <-  proc.time()[1]- oldTime
+      dtime <-  proc.time()[1] - oldTime
       trackInfo[[fIdx]]$time[nr] <<- trackInfo[[fIdx]]$time[nr] + dtime
     }
 
@@ -445,14 +446,14 @@ inspect <- function(expr, track=track)
   ##
   ##@codestatus : testing
   
-  ## getting the call and his parameter
-  fCall <- as.character(substitute(expr));
+  ## get the call and its parameters
+  fCall <- as.character(substitute(expr))
 
   ## get the original call
-  callExpr <- deparse(substitute(expr));
+  callExpr <- deparse(substitute(expr))
   
-  ## getting the name of the function
-  fname <- fCall[1];
+  ## get the name of the function
+  fname <- fCall[1]
   
   ## check for generic function
   if(isGeneric(fname))
@@ -461,7 +462,7 @@ inspect <- function(expr, track=track)
     selType <- sapply(fCall[-1],
                       function(x)
                       {
-                        if(exists(x,envir=sys.parent(sys.parent())))
+                        if(exists(x, envir=sys.parent(sys.parent())))
                         {                        
                           varSig <- is(get(x,envir=sys.parent(sys.parent())))[1]
                         }
@@ -486,9 +487,7 @@ inspect <- function(expr, track=track)
       if(length(ellipseIdx) != 0)
       {
         selType <- c(selType,rep("missing",nrMissing -1 ))
-      }
-      else
-      {
+      } else {
         selType <- c(selType,rep("missing",nrMissing))
       }
     }
@@ -500,11 +499,10 @@ inspect <- function(expr, track=track)
 
     ## create an identifier for the generic function
     fNameId <- paste("S4",fname,paste(selFunc@defined@.Data, collapse="/"), sep="/")
-  }
-  else
-  {
+    
+  } else {
     ## deparse the function
-    fbody <- try(deparse(get(fname), width.cutoff=500))
+    fbody <- try(deparse(get(fname), width.cutoff=500), silent=TRUE)
     if (inherits(fbody, "try-error")) {
       ##  in case the function is defined
       ##  in the test case file
@@ -535,10 +533,8 @@ inspect <- function(expr, track=track)
   if(!inherits(parsedFunc,"try-error"))
   {
     ## call the new function
-    res <- eval(parsedFunc,envir=parent.frame())
-  }
-  else
-  {
+    res <- eval(parsedFunc, envir=parent.frame())
+  } else {
     ## no parsing possible
     ## simple call without tracking
     res <- expr

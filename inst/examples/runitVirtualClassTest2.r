@@ -14,7 +14,7 @@
 ##  along with this program; if not, write to the Free Software
 ##  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 
-##  $Id: runitVirtualClassTest.r,v 1.2 2009/04/16 09:23:25 burgerm Exp $
+##  $Id: runitVirtualClassTest.r,v 1.1 2007/03/31 21:15:00 burgerm Exp $
 
 
 ##  example code for test cases for S4 virtual class methods
@@ -36,21 +36,17 @@ setClass(className,
            representation("VIRTUAL",
                           x = "numeric",
                           y = "numeric",
-                          description = "character"),
-           validity = NULL,
-           sealed   = FALSE,
-           where    = .GlobalEnv)
+                          description = "character"))
 
 if (!isGeneric("getX")) {
   setGeneric("getX", function(object, ...) standardGeneric("getX"),
              useAsDefault=TRUE, where=.GlobalEnv, valueClass="numeric")
 }
-setMethod("getX", signature=className, function(object) return(object@x),
-          where=.GlobalEnv)
+setMethod("getX", signature=className, function(object) return(object@x))
 
 if (!isGeneric("setX<-")) {
   setGeneric("setX<-", function(object, value) standardGeneric("setX<-"),
-             useAsDefault=TRUE, where=.GlobalEnv)
+             useAsDefault=TRUE)
 }
 
  
@@ -64,7 +60,7 @@ setMethod("setX<-", signature=signature(object=className, value="numeric"),
             }
             object@x <- value
             return(object)
-          }, where=.GlobalEnv)
+          })
 
 
 testMyVirtualBaseClass.getX <- function() {
@@ -77,12 +73,10 @@ testMyVirtualBaseClass.getX <- function() {
   
   testClassName <- "MyDerivedTestClass"
   setClass(testClassName,
-           representation("MyVirtualBaseClass"),
-           validity = NULL,
-           sealed   = FALSE,
-           where    = .GlobalEnv)
+           representation("MyVirtualBaseClass")
+           )
   
-  on.exit(removeClass(testClassName, where=.GlobalEnv))
+  on.exit(removeClass(testClassName))
     
   ##  system constructor
   this <- new(testClassName)
@@ -105,12 +99,10 @@ testMyVirtualBaseClass.setX <- function() {
 
   testClassName <- "MyDerivedTestClass"
   setClass(testClassName,
-           representation("MyVirtualBaseClass"),
-           validity = NULL,
-           sealed   = FALSE,
-           where    = .GlobalEnv)
+           representation("MyVirtualBaseClass")
+           )
   
-  on.exit(removeClass(testClassName, where=.GlobalEnv))
+  on.exit(removeClass(testClassName))
   
   ##  system constructor
   this <- new(testClassName)

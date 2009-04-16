@@ -1,10 +1,9 @@
 ##  RUnit : A unit test framework for the R programming language
-##  Copyright (C) 2003, 2004  Thomas Koenig, Matthias Burger, Klaus Juenemann
+##  Copyright (C) 2003-2009  Thomas Koenig, Matthias Burger, Klaus Juenemann
 ##
 ##  This program is free software; you can redistribute it and/or modify
 ##  it under the terms of the GNU General Public License as published by
-##  the Free Software Foundation; either version 2 of the License, or
-##  (at your option) any later version.
+##  the Free Software Foundation; version 2 of the License.
 ##
 ##  This program is distributed in the hope that it will be useful,
 ##  but WITHOUT ANY WARRANTY; without even the implied warranty of
@@ -15,7 +14,8 @@
 ##  along with this program; if not, write to the Free Software
 ##  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 
-##  $Id: textProtocol.r,v 1.15 2008/06/18 17:18:10 burgerm Exp $
+##  $Id: textProtocol.r,v 1.16 2009/04/16 09:49:13 burgerm Exp $
+
 
 printTextProtocol <- function(testData,
                               fileName = "",
@@ -26,7 +26,7 @@ printTextProtocol <- function(testData,
   ##@bdescr
   ##  Report generator
   ##  Extracts the log information stored in the 'RUnitTestData' test run object
-  ##  and generates a well formated output.
+  ##  and generates a well formated protocol output.
   ##@edescr
   ##
   ##@in  testData            : [RUnitTestData] S3 class object
@@ -34,7 +34,7 @@ printTextProtocol <- function(testData,
   ##@in  separateFailureList : [logical] if TRUE (default) add a failure list
   ##@in  showDetails         : [logical] if TRUE (default) add detailed trackbacks for each error incurred
   ##@in  traceBackCutOff     : [integer] number of steps back in the trace back stack to display
-  ##@ret                     : [logical] TRUE if execution completed wo error
+  ##@ret                     : [logical] TRUE if execution completed without error
   ##
   ##@codestatus : testing
 

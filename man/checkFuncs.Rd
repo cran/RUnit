@@ -1,10 +1,9 @@
 %%  RUnit : A unit test framework for the R programming language
-%%  Copyright (C) 2003-2007  Thomas Koenig, Matthias Burger, Klaus Juenemann
+%%  Copyright (C) 2003-2009  Thomas Koenig, Matthias Burger, Klaus Juenemann
 %%
 %%  This program is free software; you can redistribute it and/or modify
 %%  it under the terms of the GNU General Public License as published by
-%%  the Free Software Foundation; either version 2 of the License, or
-%%  (at your option) any later version.
+%%  the Free Software Foundation; version 2 of the License.
 %%
 %%  This program is distributed in the hope that it will be useful,
 %%  but WITHOUT ANY WARRANTY; without even the implied warranty of
@@ -15,7 +14,7 @@
 %%  along with this program; if not, write to the Free Software
 %%  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 
-%%  $Id: checkFuncs.Rd,v 1.12 2007/05/15 22:42:16 burgerm Exp $
+%%  $Id: checkFuncs.Rd,v 1.14 2009/04/16 09:13:31 burgerm Exp $
 
 \encoding{latin1}
 \name{checkFuncs}
@@ -28,8 +27,10 @@
 \title{RUnit check functions}
 
 \usage{
-checkEquals(target, current, msg, tolerance = .Machine$double.eps^0.5, checkNames = TRUE, ...)
-checkEqualsNumeric(target, current, msg, tolerance = .Machine$double.eps^0.5, ...)
+checkEquals(target, current, msg,
+            tolerance = .Machine$double.eps^0.5, checkNames = TRUE, ...)
+checkEqualsNumeric(target, current, msg,
+                   tolerance = .Machine$double.eps^0.5, ...)
 checkIdentical(target, current, msg)
 checkTrue(expr, msg)
 checkException(expr, msg, silent=FALSE)
@@ -67,7 +68,7 @@ DEACTIVATED(msg)
   that it invokes \code{all.equal.numeric} instead of \code{all.equal}
   
   \code{checkIdentical} is a convenience wrapper around identical using
-  the error loggin mechanism of RUnit.
+  the error logging mechanism of RUnit.
   
   \code{checkTrue} uses the function \code{identical} to check if the expression
   provided as first argument evaluates to \code{TRUE}. If not, an error is
@@ -129,10 +130,20 @@ checkTrue(1 < 2, "check1")     ## passes fine
 
 v <- 1:3
 w <- 1:3
-checkEquals(v,w)          ## pasess fine
+checkEquals(v, w)               ## passes fine
 names(v) <- c("A", "B", "C")
-## checkEquals(v,w)      ## fails because v and w have different names
-checkEqualsNumeric(v,w)  ## passes fine because names are ignored
+## checkEquals(v, w)            ## fails because v and w have different names
+checkEqualsNumeric(v, w)        ## passes fine because names are ignored
+
+
+x <- rep(1:12, 2)
+y <- rep(0:1, 12)
+res <- list(a=1:3, b=letters, LM=lm(y ~ x))
+res2 <- list(a=seq(1,3,by=1), b=letters, LM=lm(y ~ x))
+checkEquals( res, res2)        ## passes fine
+checkIdentical( res, res)
+checkIdentical( res2, res2)
+## checkIdentical( res, res2)  ## fails because element 'a' differs in type
 
 
 fun <- function(x) {
@@ -143,7 +154,7 @@ fun <- function(x) {
   return()
 }
 
-checkException(fun(TRUE))   ## passes fine
+checkException(fun(TRUE))      ## passes fine
 ## checkException(fun(FALSE))  ## failure, because f raises no error
 checkException(fun(TRUE), silent=TRUE)
 

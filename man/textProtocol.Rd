@@ -1,10 +1,9 @@
 %%  RUnit : A unit test framework for the R programming language
-%%  Copyright (C) 2003-2008  Thomas Koenig, Matthias Burger, Klaus Juenemann
+%%  Copyright (C) 2003-2009  Thomas Koenig, Matthias Burger, Klaus Juenemann
 %%
 %%  This program is free software; you can redistribute it and/or modify
 %%  it under the terms of the GNU General Public License as published by
-%%  the Free Software Foundation; either version 2 of the License, or
-%%  (at your option) any later version.
+%%  the Free Software Foundation; version 2 of the License.
 %%
 %%  This program is distributed in the hope that it will be useful,
 %%  but WITHOUT ANY WARRANTY; without even the implied warranty of
@@ -15,7 +14,7 @@
 %%  along with this program; if not, write to the Free Software
 %%  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 
-%%  $Id: textProtocol.Rd,v 1.12 2008/06/19 11:46:51 burgerm Exp $
+%%  $Id: textProtocol.Rd,v 1.14 2009/04/16 09:13:31 burgerm Exp $
 
 \encoding{latin1}
 \name{textProtocol}
@@ -25,11 +24,16 @@
 \alias{summary.RUnitTestData}
 \alias{getErrors}
 
-\title{Printing a plain text or HTML version of an RUnit test run.}
+\title{Printing a plain text or HTML version of an RUnit test run protocol.}
 
 \usage{
-  printTextProtocol(testData, fileName = "", separateFailureList = TRUE, showDetails = TRUE, traceBackCutOff=9)
-  printHTMLProtocol(testData, fileName = "", separateFailureList = TRUE, traceBackCutOff=9, testFileToLinkMap=function(x) x )
+  printTextProtocol(testData, fileName = "",
+                    separateFailureList = TRUE,
+                    showDetails = TRUE, traceBackCutOff = 9)
+  printHTMLProtocol(testData, fileName = "",
+                    separateFailureList = TRUE,
+                    traceBackCutOff = 9,
+                    testFileToLinkMap = function(x) x )
   print.RUnitTestData(x, ...)
   summary.RUnitTestData(object, ...)
   getErrors(testData)
@@ -44,7 +48,7 @@
     and errors is produced at the top of the protocol. Otherwise, the
     failures and errors are only listed in the details section.}
   \item{showDetails}{If \code{TRUE} the protocol contains a detailed listing of
-    all exectuted test functions.}
+    all executed test functions.}
   \item{traceBackCutOff}{The details section of the test protocol contains the call stack for
     all errors. The first few entries of the complete stack typically
     contain the internal \pkg{RUnit} function calls that execute the test cases and
@@ -86,7 +90,7 @@
   increasing amount of information. The first section as an overview just reports the
   number of executed test functions and the number of failures and
   errors. The second section describes all test suites. Optionally, all
-  errors and failures that occured in some test suite are listed.
+  errors and failures that occurred in some test suite are listed.
   In the optional third section details are given about all executed
   test functions in the order they were processed. For each test file
   all test functions executed are listed in the order they were executed. After the test
@@ -106,13 +110,15 @@
 \examples{
 
 ## run some test suite
-myTestSuite <- defineTestSuite("RUnit Example", system.file("examples", package="RUnit"), testFileRegexp="correctTestCase.r")
+myTestSuite <- defineTestSuite("RUnit Example",
+                               system.file("examples", package = "RUnit"),
+                               testFileRegexp = "correctTestCase.r")
 testResult <- runTestSuite(myTestSuite)
 
 
 ## prints detailed text protocol
 ## to standard out:
-printTextProtocol(testResult, showDetails=TRUE)
+printTextProtocol(testResult, showDetails = TRUE)
 ## prints detailed html protocol
 ## to standard out
 printHTMLProtocol(testResult)
@@ -121,22 +127,24 @@ printHTMLProtocol(testResult)
 \dontrun{
 ##  example function to add links to URL of the code files in a code
 ##  repository, here the SourceForge repository
-testFileToSFLinkMap <- function(testFileName, testDir="tests") {
+testFileToSFLinkMap <- function(testFileName, testDir = "tests") {
     ##  get unit test file name
     bname <- basename(testFileName)
     
     ## figure out package name
-    regExp <- paste("^.*/([\\.a-zA-Z0-9]*)/",testDir,"/.*$", sep="")
+    regExp <- paste("^.*/([\\.a-zA-Z0-9]*)/", testDir,"/.*$", sep = "")
     pack <- sub(regExp, "\\1", testFileName)
     return(paste("http://runit.cvs.sourceforge.net/runit/",
-                 pack, testDir, bname, sep="/"))
+                 pack, testDir, bname, sep = "/"))
   }
 
 
 ##  example call for a test suite run on the RUnit package
-testSuite <- defineTestSuite("RUnit", "<path-to-source-folder>/RUnit/tests", testFileRegexp="^test.+")
+testSuite <- defineTestSuite("RUnit", "<path-to-source-folder>/RUnit/tests",
+                             testFileRegexp = "^test.+")
 testResult <- runTestSuite(testSuite)
-printHTMLProtocol(testResult, fileName = "RUnit-unit-test-log.html", testFileToLinkMap=testFileToSFLinkMap )
+printHTMLProtocol(testResult, fileName = "RUnit-unit-test-log.html",
+                  testFileToLinkMap = testFileToSFLinkMap )
 }
 
 }

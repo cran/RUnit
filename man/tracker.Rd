@@ -1,10 +1,9 @@
 %%  RUnit : A unit test framework for the R programming language
-%%  Copyright (C) 2003-2007  Thomas Koenig, Matthias Burger, Klaus Juenemann
+%%  Copyright (C) 2003-2009  Thomas Koenig, Matthias Burger, Klaus Juenemann
 %%
 %%  This program is free software; you can redistribute it and/or modify
 %%  it under the terms of the GNU General Public License as published by
-%%  the Free Software Foundation; either version 2 of the License, or
-%%  (at your option) any later version.
+%%  the Free Software Foundation; version 2 of the License.
 %%
 %%  This program is distributed in the hope that it will be useful,
 %%  but WITHOUT ANY WARRANTY; without even the implied warranty of
@@ -15,7 +14,7 @@
 %%  along with this program; if not, write to the Free Software
 %%  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 
-%%  $Id: tracker.Rd,v 1.12 2009/01/15 13:26:15 burgerm Exp $
+%%  $Id: tracker.Rd,v 1.14 2009/04/16 09:13:31 burgerm Exp $
 
 \encoding{latin1}
 \name{tracker}
@@ -105,11 +104,11 @@ track$init()
 
 ##  inspect the function
 ##  resFoo1 will contain the result of calling foo(50)
-resFoo1 <- inspect(foo(50), track=track)
+resFoo1 <- inspect(foo(50), track = track)
 
-resFoo2 <- inspect(foo(20), track=track)
+resFoo2 <- inspect(foo(20), track = track)
 
-resBar1 <- inspect(bar(30), track=track)
+resBar1 <- inspect(bar(30), track = track)
 
 ##  get the tracked function call info for all inspect calls
 resTrack <- track$getTrackInfo()
