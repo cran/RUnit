@@ -14,7 +14,7 @@
 ##  along with this program; if not, write to the Free Software
 ##  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 
-##  $Id: html.r,v 1.9 2009/04/16 09:45:19 burgerm Exp $
+##  $Id: html.r,v 1.10 2009/11/04 17:00:39 burgerm Exp $
 
 
 writeRaw <- function(htmlStr,htmlFile,append=TRUE)
@@ -183,7 +183,7 @@ writeBeginTag <- function(htmlTag,htmlFile,para="",append=TRUE)
   ##
   ##@codestatus : internal
    
-  if(para =="") {
+  if(all(para =="")) {
     writeRaw(paste("<",htmlTag,">",sep=""),htmlFile,append)
   } else {
     writeRaw(paste("<",htmlTag," ",para,">",sep=""),htmlFile,append)

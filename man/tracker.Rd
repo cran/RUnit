@@ -14,7 +14,7 @@
 %%  along with this program; if not, write to the Free Software
 %%  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 
-%%  $Id: tracker.Rd,v 1.14 2009/04/16 09:13:31 burgerm Exp $
+%%  $Id: tracker.Rd,v 1.15 2009/11/04 17:06:56 burgerm Exp $
 
 \encoding{latin1}
 \name{tracker}
@@ -66,11 +66,13 @@
   }
 }
 
-\author{Thomas \enc{König}{Koenig}, Klaus \enc{Jünemann}{Juenemann} \& Matthias Burger}
+\author{Thomas \enc{König}{Koenig}, Klaus \enc{Jünemann}{Juenemann} 
+\ifelse{html}{\out{&amp;}}{\&} Matthias Burger}
 
 \seealso{
   \code{\link{inspect}} for the registration of functions \& methods to
-  be on the tracking list.
+  be on the tracking list, and 
+  \code{\link{printHTML.trackInfo}} for displaying results
 }
 
 \examples{

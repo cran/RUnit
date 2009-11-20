@@ -1,4 +1,3 @@
-######################################################################
 ##  RUnit : A unit test framework for the R programming language
 ##  Copyright (C) 2003-2009  Thomas Koenig, Matthias Burger, Klaus Juenemann
 ##
@@ -15,31 +14,36 @@
 ##  along with this program; if not, write to the Free Software
 ##  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 
-##  $Id: 00Init.r,v 1.9 2009/11/05 18:53:26 burgerm Exp $
+##  $Id: options.r,v 1.2 2009/11/25 15:03:54 burgerm Exp $
 
-
-.onLoad <- function(libname, pkgname)
-{
+.buildRUnitOptions <- function() {
   ##@bdescr
-  ## Internal Function.
-  ## Not to be called by users.
+  ##  Internal function
+  ##  adds an entry to R's default global option list
+  ##  modelled after version in package Biobase (BioC) 
   ##@edescr
-
-  ##  load required packages
-  errMsg <- paste("\nLoading required package 'methods' failed. RUnit could not be loaded.",
-                  "\nCheck your library installation path.\n")
-  require(methods) || stop(errMsg)
-
+  ##
+  ##@ret : [list] extended options() list
+  ##
+  ##@codestatus : internal
   
-  runitVersion <- packageDescription("RUnit", lib.loc=libname, fields="Version")
-  ##  avoid cmd check NOTEs
-  assign(".testLogger", NULL, envir=.GlobalEnv)
-  ##  add options to R's global options list
-  .buildRUnitOptions()
-}
+  RUnit <- getOption("RUnit")
+  if (is.null(RUnit)) {
+    RUnit <- list()
+    class(RUnit) <- "RUnitOptions"
+  }
 
-.onUnload <- function(libpath) {
-  ##  drop RUnit specific options from global options list
-  options("RUnit"=NULL)
+  if (is.null( RUnit$verbose)) {
+    ##  integer: == 0: silent, >= 1: add comments to test case log 
+     RUnit$verbose <- 1L
+  }
+  
+  if (is.null(RUnit$silent)) {
+    RUnit$silent <- FALSE
+  }
+  
+  if (is.null(RUnit$outfile)) {
+    RUnit$outfile <- NULL
+  }
+  options("RUnit"=RUnit)
 }
-

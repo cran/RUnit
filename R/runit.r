@@ -14,7 +14,7 @@
 ##  along with this program; if not, write to the Free Software
 ##  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 
-##  $Id: runit.r,v 1.29 2009/04/22 13:48:22 burgerm Exp $
+##  $Id: runit.r,v 1.33 2009/11/25 15:03:54 burgerm Exp $
 
 
 defineTestSuite <- function(name, dirs, 
@@ -52,7 +52,7 @@ defineTestSuite <- function(name, dirs,
               rngNormalKind=rngNormalKind)
 
   class(ret) <- "RUnitTestSuite"
-  return(ret)
+  return(invisible(ret))
 }
 
 
@@ -73,7 +73,7 @@ isValidTestSuite <- function(testSuite)
     warning(paste("'testSuite' object is not of class 'RUnitTestSuite'."))
     return(FALSE)
   }
-  ##  check required elements, irrepective of order, allow for additional elements
+  ##  check required elements, irrespective of order, allow for additional elements
   requiredNames <-  c("name", "dirs", "testFileRegexp", "testFuncRegexp",
                       "rngKind", "rngNormalKind")
   if(!all(requiredNames %in% names(testSuite)))
@@ -104,18 +104,18 @@ isValidTestSuite <- function(testSuite)
   }
 
   if (length(testSuite[["name"]]) != 1) {
-    warning(paste("'name' element may only contain exatly one name."))
+    warning(paste("'name' element may only contain exactly one name."))
     return(FALSE)
   }
   ##  RNGkind has an internal list of valid names which cannot be accessed
-  ##  programatically. Furthermore, users can define their own RNG and select that one
+  ##  programmatically. Furthermore, users can define their own RNG and select that one
   ##  so we have to leave it to RNGkind() to check if the arguments are valid.
   if (length(testSuite[["rngKind"]]) != 1) {
-    warning(paste("'rngKind' element may only contain exatly one name."))
+    warning(paste("'rngKind' element may only contain exactly one name."))
     return(FALSE)
   }
   if (length(testSuite[["rngNormalKind"]]) != 1) {
-    warning(paste("'rngNormalKind' element may only contain exatly one name."))
+    warning(paste("'rngNormalKind' element may only contain exactly one name."))
     return(FALSE)
   }
   return(TRUE)
@@ -133,7 +133,7 @@ isValidTestSuite <- function(testSuite)
   ##
   ##@codestatus : internal
   
-  return()
+  return(invisible())
 }
 
 
@@ -148,7 +148,7 @@ isValidTestSuite <- function(testSuite)
   ##
   ##@codestatus : internal
   
-  return()
+  return(invisible())
 }
 
 
@@ -172,18 +172,20 @@ isValidTestSuite <- function(testSuite)
   func <- get(funcName, envir=envir)
   ## anything else than a function is ignored.
   if(mode(func) != "function") {
-    return()
+    return(invisible())
   }
 
-  cat("\n\nExecuting test function",funcName," ... ")
-
+  if (.testLogger$getVerbosity() > 0) {
+    cat("\n\nExecuting test function", funcName, " ... ")
+  }
+  
   ## safe execution of setup function
   res <- try(setUpFunc())
   if (inherits(res, "try-error")) {
     message <- paste("Error executing .setUp before",funcName, ":", geterrmessage())
     .testLogger$addError(testFuncName=paste(".setUp (before ", funcName, ")", sep=""),
                          errorMsg=message)
-    return()
+    return(invisible())
   }
 
   ## reset book keeping variables in .testLogger
@@ -216,11 +218,13 @@ isValidTestSuite <- function(testSuite)
     message <- paste("Error executing .tearDown after",funcName, ":", geterrmessage())
     .testLogger$addError(testFuncName=paste(".tearDown (after ", funcName, ")", sep=""),
                          errorMsg=message)
-    return()
+    return(invisible())
   }
 
-  cat(" done successfully.\n\n")
-  return()
+  if (.testLogger$getVerbosity() > 0) {
+    cat(" done successfully.\n\n")
+  }
+  return(invisible())
 }
 
 
@@ -240,10 +244,9 @@ isValidTestSuite <- function(testSuite)
 
   .testLogger$setCurrentSourceFile(absTestFileName)
   if (!file.exists(absTestFileName)) {
-    message <- paste("Test case file ", absTestFileName," not found.")
-    .testLogger$addError(testFuncName=absTestFileName,
-                        errorMsg=message)
-    return()
+    msgText <- paste("Test case file ", absTestFileName," not found.")
+    .testLogger$addError(testFuncName=absTestFileName, errorMsg=msgText)
+    return(invisible())
   }
   
 
@@ -254,9 +257,8 @@ isValidTestSuite <- function(testSuite)
   res <- try(sys.source(absTestFileName, envir=sandbox))
   if (inherits(res, "try-error")) {
     message <- paste("Error while sourcing ",absTestFileName,":",geterrmessage())
-    .testLogger$addError(testFuncName=absTestFileName,
-                        errorMsg=message)
-    return()
+    .testLogger$addError(testFuncName=absTestFileName, errorMsg=message)
+    return(invisible())
   }
   ##  test file provides definition of .setUp/.tearDown
   if (exists(".setUp", envir=sandbox, inherits=FALSE)) {
@@ -273,20 +275,21 @@ isValidTestSuite <- function(testSuite)
 }
 
 
-runTestSuite <- function(testSuites, useOwnErrorHandler=TRUE) {
+runTestSuite <- function(testSuites, useOwnErrorHandler=TRUE, verbose=getOption("RUnit")$verbose) {
   ##@bdescr
-  ## This is the main function of the runit framework. It finds all the relevant
-  ## test files and triggers all the required actions. At the end it creates a test
+  ## This is the main function of the RUnit framework. It identifies all specified
+  ## test files and triggers all required actions. At the end it creates a test
   ## protocol data object. 
   ## IMPORTANT to note, the random number generator is (re-)set to the default
-  ## methods specified in defineTestSuite() before each new test case file is sourced. 
-  ## This garantees that each new test case set defined together in on file can rely
+  ## methods specified in defineTestSuite() before each new test case *file* is sourced. 
+  ## This guarantees that each new test case set defined together in on file can rely
   ## on the default, even if the random number generator version is being reconfigured in some
   ## previous test case file(s).
   ##@edescr
   ##
   ##@in  testSuites         : [list] list of test suite lists
-  ##@in  useOwnErrorHandler : [logical] TRUE (default) : use the runit error handler
+  ##@in  useOwnErrorHandler : [logical] TRUE (default) : use the RUnit error handler
+  ##@in  verbose            : [integer] >= 1: (default) write begin/end comments for each test case, 0: omit begin/end comment 
   ##@ret                    : [list] 'RUnitTestData' S3 class object
   ##
   ##@codestatus : testing
@@ -301,19 +304,38 @@ runTestSuite <- function(testSuites, useOwnErrorHandler=TRUE) {
   if (is.na(useOwnErrorHandler)) {
     stop("argument 'useOwnErrorHandler' may not contain NA.")
   }
-  
-  
+
+  oFile <- getOption("RUnit")$outfile
+  if (!is.null(oFile)) {
+    if(is.character(oFile)) {
+      ##  connection has to be open when handed on to sink
+      oFile <- file(oFile, "w")
+    } else if(!inherits(oFile, "connection")) {
+      stop("'outfile' must be a connection or a character string.")
+    }
+    sink(file=oFile)
+    sink(file=oFile, type="message")
+    resetStream <- function() {
+      sink(type="message")
+      sink()
+      flush(oFile)
+      close(oFile)
+      ##close(oFile)
+    }
+    on.exit(resetStream())
+  }
   ##  record RNGkind and reinstantiate on exit
   rngDefault <- RNGkind()
-  on.exit(RNGkind(kind=rngDefault[1], normal.kind=rngDefault[2]))
+  on.exit(RNGkind(kind=rngDefault[1], normal.kind=rngDefault[2]), add=TRUE)
   
   oldErrorHandler <- getOption("error")
   ## reinstall error handler
   on.exit(options(error=oldErrorHandler), add=TRUE)
   
   ## initialize TestLogger
-  assign(".testLogger", .newTestLogger(useOwnErrorHandler), envir = .GlobalEnv)
-
+  assign(".testLogger", .newTestLogger(useOwnErrorHandler), envir=.GlobalEnv)
+  .testLogger$setVerbosity(verbose)
+  
   ## main loop
   if (isValidTestSuite(testSuites)) {
     testSuites <- list(testSuites)
@@ -349,7 +371,8 @@ runTestSuite <- function(testSuites, useOwnErrorHandler=TRUE) {
 runTestFile <- function(absFileName, useOwnErrorHandler=TRUE, 
                         testFuncRegexp="^test.+",
                         rngKind="Marsaglia-Multicarry",
-                        rngNormalKind="Kinderman-Ramage") {
+                        rngNormalKind="Kinderman-Ramage",
+                        verbose=getOption("RUnit")$verbose) {
   ##@bdescr
   ##  Convenience function.
   ##@edescr
@@ -357,8 +380,9 @@ runTestFile <- function(absFileName, useOwnErrorHandler=TRUE,
   ##@in  absFileName        : [character] complete file name of test cases code file
   ##@in  useOwnErrorHandler : [logical] if TRUE RUnits error handler will be used
   ##@in  testFuncRegexp     : [character]
-  ##@in  rngKind            : [character] name of the RNG, see RNGversion()
-  ##@in  rngNormalKind      : [character] name of the RNG for rnorm, see RNGversion()
+  ##@in  rngKind            : [character] name of the RNG, see RNGkind for avialbale options
+  ##@in  rngNormalKind      : [character] name of the RNG for rnorm, see RNGkind for avialbale options
+  ##@in  verbose            : [integer] >= 1: (default) write begin/end comments for each test case, 0: ommit begin/end comment (passed on to function runTestSuite)
   ##@ret                    : [list] 'RUnitTestData' S3 class object
   ##
   ##@codestatus : testing
@@ -375,5 +399,6 @@ runTestFile <- function(absFileName, useOwnErrorHandler=TRUE,
                         rngKind=rngKind,
                         rngNormalKind=rngNormalKind)
                         
-  return(runTestSuite(ts, useOwnErrorHandler=useOwnErrorHandler))
+  return(runTestSuite(ts, useOwnErrorHandler=useOwnErrorHandler,
+                      verbose=verbose))
 }

@@ -14,7 +14,7 @@
 ##  along with this program; if not, write to the Free Software
 ##  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 
-##  $Id: runitVirtualClassTest.r,v 1.2 2009/04/16 09:23:25 burgerm Exp $
+##  $Id: runitVirtualClassTest.r,v 1.3 2009/11/04 16:54:13 burgerm Exp $
 
 
 ##  example code for test cases for S4 virtual class methods
@@ -69,7 +69,7 @@ setMethod("setX<-", signature=signature(object=className, value="numeric"),
 
 testMyVirtualBaseClass.getX <- function() {
   ##@bdescr
-  ##  create a derived class with no own mehtod definitions
+  ##  create a derived class with no own method definitions
   ##  which inherits parent class methods that can then be checked
   ##
   ##  getter test case

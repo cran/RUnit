@@ -14,7 +14,7 @@
 ##  along with this program; if not, write to the Free Software
 ##  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 
-##  $Id: checkFuncs.r,v 1.21 2009/04/16 09:44:26 burgerm Exp $
+##  $Id: checkFuncs.r,v 1.24 2009/11/05 18:57:56 burgerm Exp $
 
 
 checkEquals <- function(target, current, msg="",
@@ -22,7 +22,7 @@ checkEquals <- function(target, current, msg="",
 {
   ##@bdescr
   ## checks if two objects are equal, thin wrapper around 'all.equal'
-  ## with tolerance one can adjust to and allow for numerical imprecission
+  ## with tolerance one can adjust to and allow for numerical imprecision
 
   ##@edescr
   ##@in  target    : [ANY] one thing to be compared
@@ -49,7 +49,7 @@ checkEquals <- function(target, current, msg="",
   if (length(checkNames) != 1) {
     stop("'checkNames' has to be a scalar")
   }
-  if(exists(".testLogger", envir=.GlobalEnv)) {
+  if(.existsTestLogger()) {
     .testLogger$incrementCheckNum()
   }
   if (!identical(TRUE, checkNames)) {
@@ -58,7 +58,7 @@ checkEquals <- function(target, current, msg="",
   }
   result <- all.equal(target, current, tolerance=tolerance, ...)
   if (!identical(result, TRUE)) {
-    if(exists(".testLogger", envir=.GlobalEnv)) {
+    if(.existsTestLogger()) {
       .testLogger$setFailure()
     }
     stop(paste(result, collapse="\n"), msg)
@@ -72,7 +72,7 @@ checkEqualsNumeric <- function(target, current, msg="", tolerance = .Machine$dou
 {
   ##@bdescr
   ## checks if two objects are equal, thin wrapper around 'all.equal.numeric'
-  ## with tolerance one can adjust to and allow for numerical imprecission.
+  ## with tolerance one can adjust to and allow for numerical imprecision.
   ## current and target are converted via as.vector() thereby stripping all attributes.
   ##@edescr
   ##@in target    : [ANY] one thing to be compared
@@ -93,14 +93,14 @@ checkEqualsNumeric <- function(target, current, msg="", tolerance = .Machine$dou
   if (length(tolerance) != 1) {
     stop("'tolerance' has to be a scalar")
   }
-  if(exists(".testLogger", envir=.GlobalEnv)) {
+  if(.existsTestLogger()) {
     .testLogger$incrementCheckNum()
   }
   ##  R 2.3.0: changed behaviour of all.equal
   ##  strip attributes before comparing current and target
   result <- all.equal.numeric(as.vector(target), as.vector(current), tolerance=tolerance, ...)
   if (!identical(result, TRUE)) {
-    if(exists(".testLogger", envir=.GlobalEnv)) {
+    if(.existsTestLogger()) {
       .testLogger$setFailure()
     }
     stop(paste(result, collapse="\n"), msg)
@@ -127,13 +127,13 @@ checkIdentical <- function(target, current, msg="")
   if (missing(current)) {
     stop("argument 'current' is missing")
   }
-  if(exists(".testLogger", envir=.GlobalEnv)) {
+  if(.existsTestLogger()) {
     .testLogger$incrementCheckNum()
   }
   
   result <- identical(target, current)
   if (!identical(TRUE, result)) {
-    if(exists(".testLogger", envir=.GlobalEnv)) {
+    if(.existsTestLogger()) {
       .testLogger$setFailure()
     }
     stop(paste(paste(result, collapse="\n"), msg))
@@ -158,16 +158,16 @@ checkTrue <- function(expr, msg="")
   if (missing(expr)) {
     stop("'expr' is missing")
   }
-  if(exists(".testLogger", envir=.GlobalEnv)) {
+  if(.existsTestLogger()) {
     .testLogger$incrementCheckNum()
   }
 
-  ##  allow named logical argument expr
+  ##  allow named logical argument 'expr'
   result <- eval(expr)
   names(result) <- NULL
   
   if (!identical(result, TRUE)) {
-    if(exists(".testLogger", envir=.GlobalEnv)) {
+    if(.existsTestLogger()) {
       .testLogger$setFailure()
     }
     stop("Test not TRUE\n", msg)
@@ -177,7 +177,7 @@ checkTrue <- function(expr, msg="")
 }
 
 
-checkException <- function(expr, msg="", silent=FALSE)
+checkException <- function(expr, msg="", silent=getOption("RUnit")$silent)
 {
   ##@bdescr
   ## checks if a function call creates an error. The passed function must be parameterless.
@@ -198,12 +198,16 @@ checkException <- function(expr, msg="", silent=FALSE)
   if (missing(expr)) {
     stop("'expr' is missing")
   }
-  if(exists(".testLogger", envir=.GlobalEnv)) {
+  if(is.null(silent)) {
+    silent <- FALSE
+    warning("'silent' has to be of type 'logical'. Was NULL. Set to FALSE.")
+  }
+  if(.existsTestLogger()) {
     .testLogger$incrementCheckNum()
   }
 
-  if (!inherits(try(eval(expr, envir = parent.frame()), silent=silent), "try-error")) {
-    if(exists(".testLogger", envir=.GlobalEnv)) {
+  if (!inherits(try(eval(expr, envir=parent.frame()), silent=silent), "try-error")) {
+    if(.existsTestLogger()) {
       .testLogger$setFailure()
     }
     stop("Error not generated as expected\n", msg)
@@ -218,10 +222,10 @@ DEACTIVATED <- function(msg="")
   ##@bdescr
   ##  Convenience function, for maintaining test suites.
   ##  If placed in an existing test case call
-  ##  the test will be executed normally until occurance of the call
+  ##  the test will be executed normally until occurrence of the call
   ##  after which execution will leave the test case (so all code will
   ##  be checked and errors or failures reported as usual).
-  ##  An entry for a seperate table in the log will be added
+  ##  An entry for a separate table in the log will be added
   ##  for this test case.
   ##
   ##@edescr
@@ -229,7 +233,7 @@ DEACTIVATED <- function(msg="")
   ##
   ##@codestatus : testing
 
-  if(exists(".testLogger", envir=.GlobalEnv)) {
+  if(.existsTestLogger()) {
     .testLogger$setDeactivated(paste(msg, "\n", sep=""))
   }
   stop(msg)
