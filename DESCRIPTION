@@ -1,6 +1,6 @@
 Package: RUnit
-Version: 0.4.25
-Date: 2009/11/20
+Version: 0.4.26
+Date: 2010/09/14
 Title: R Unit test framework
 Author: Matthias Burger <burgerm@users.sourceforge.net>, Klaus
         Juenemann <k.junemann@gmx.net>, Thomas Koenig
@@ -13,6 +13,6 @@ Description: R functions implementing a standard Unit Testing
         generation tools
 License: GPL-2
 URL: https://sourceforge.net/projects/runit/
-Packaged: 2009-11-25 15:35:42 UTC; burger
+Packaged: 2010-09-15 14:05:48 UTC; burger
 Repository: CRAN
-Date/Publication: 2009-12-06 09:22:14
+Date/Publication: 2010-09-16 08:36:49
