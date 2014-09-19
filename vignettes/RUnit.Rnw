@@ -27,7 +27,6 @@
 
 %\makeindex
 %
-\usepackage{/mnt/local/R/lucid/amd64/R-2.12.0-devel_100914/lib64/R/share/texmf/tex/latex/Sweave}
 \begin{document}
 \title{RUnit - A Unit Test Framework for R}
 \author{Thomas K\"onig, Klaus J\"unemann, and Matthias Burger\\Epigenomics AG}
@@ -249,39 +248,49 @@ The result of the tracking process allows further analysis of the executed code.
 
 \subsubsection{Usage}
 The usage of the Code Inspector and the Tracker object is very simple. The following code snippet is an example:
-\begin{Schunk}
-\begin{Sinput}
-> library(RUnit)
-> foo <- function(x) {
-+     x <- x * x
-+     x <- 2 * x
-+     return(x)
-+ }
-> test.foo <- function() {
-+     checkTrue(is.numeric(foo(1:10)))
-+     checkEquals(length(foo(1:10)), 10)
-+     checkEqualsNumeric(foo(1), 2)
-+ }
-> bar <- function(x, y = NULL) {
-+     if (is.null(y)) {
-+         y <- x
-+     }
-+     if (all(y > 100)) {
-+         y <- y - 100
-+     }
-+     res <- x^y
-+     return(res)
-+ }
-> track <- tracker()
-> track$init()
-> a <- 1:10
-> d <- seq(0, 1, 0.1)
-> resFoo <- inspect(foo(a), track = track)
-> resBar <- inspect(bar(d), track = track)
-> resTrack <- track$getTrackInfo()
-> printHTML.trackInfo(resTrack)
-\end{Sinput}
-\end{Schunk}
+<<eval=FALSE>>=
+library(RUnit)
+
+##  define sample functions to be tested
+foo <- function(x) {
+  x <- x*x
+  x <- 2*x
+  return(x)
+}
+test.foo <- function() {
+
+  checkTrue(is.numeric(foo(1:10)))
+  checkEquals(length(foo(1:10)), 10)
+  checkEqualsNumeric(foo(1), 2)
+}
+
+bar <- function(x, y=NULL) {
+
+  if (is.null(y)) {
+    y <- x
+  }
+
+  if (all(y > 100)) {
+    ##  subtract 100
+    y <- y - 100
+  }
+
+  res <- x^y
+  return(res)
+}
+
+track <- tracker(); ## initialize a tracking "object"
+track$init(); ## initialize the tracker
+a <- 1:10
+d <- seq(0,1,0.1)
+
+resFoo <- inspect(foo(a), track=track); ## execute the test function and track
+resBar <- inspect(bar(d), track=track); ## execute the test function and track
+
+resTrack <- track$getTrackInfo(); ## get the result of Code Inspector (a list)
+
+printHTML.trackInfo(resTrack) ; ## create HTML sites
+@
 
 Note, that the tracking object is an global object and must have the name {\tt track}.
 The {\tt inspect} function awaits a function call as argument and executes and tracks the function.
@@ -300,55 +309,51 @@ Because the R parser allows very nested expressions, we didn't try to modify eve
 This is a task for the future.
 A simple example for the modifying process is as follow:\\
 original:
-\begin{Schunk}
-\begin{Sinput}
-> foo <- function(x) {
-+     y <- 0
-+     for (i in 1:x) {
-+         y <- y + x
-+     }
-+     return(y)
-+ }
-\end{Sinput}
-\end{Schunk}
+<<eval=FALSE>>=
+foo <- function(x)
+{
+  y <- 0
+  for(i in 1:x)
+  {
+      y <- y + x
+  }
+  return(y)
+}
+@
 modified:
-\begin{Schunk}
-\begin{Sinput}
-> foo.mod <- function(x) {
-+     track$bp(1)
-+     y <- 0
-+     track$bp(2)
-+     for (i in 1:x) {
-+         track$bp(4)
-+         y <- y + x
-+     }
-+     track$bp(6)
-+     return(y)
-+ }
-\end{Sinput}
-\end{Schunk}
+<<eval=FALSE>>=
+foo.mod <- function(x)
+{
+   track$bp(1) ;
+   y <- 0
+   track$bp(2);
+   for(i in 1:x)
+  {
+      track$bp(4) ;
+     y <- y +x
+  }
+   track$bp(6);
+   return(y)
+}
+@
 
 Problematic code lines are:
 
-\begin{Schunk}
-\begin{Sinput}
-> if (any(a == 1)) {
-+     print("do TRUE")
-+ } else print("do FALSE")
-\end{Sinput}
-\end{Schunk}
+<<eval=FALSE>>=
+if(any(a==1)) {
+  print("do TRUE")
+} else print ("do FALSE");
+@
 This must be modified to
-\begin{Schunk}
-\begin{Sinput}
-> if (any(a == 1)) {
-+     track$bp(2)
-+     print("do TRUE")
-+ } else {
-+     track$bp(3)
-+     print("do FALSE")
-+ }
-\end{Sinput}
-\end{Schunk}
+<<eval=FALSE>>=
+if(any(a==1)) {
+   track$bp(2);
+   print("do TRUE")
+}else{
+ track$bp(3);
+ print("do FALSE");
+}
+@
 The problem is the \textit{else} branch, that cannot be modified in the current version.
 
 \section{Future Development Ideas}
