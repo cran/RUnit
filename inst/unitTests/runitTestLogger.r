@@ -14,7 +14,7 @@
 ##  along with this program; if not, write to the Free Software
 ##  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 ##
-##  $Id: runitTestLogger.r,v 1.1 2009/11/05 18:24:38 burgerm Exp $
+##  $Id$
 
 
 cat("\n\nRUnit test cases for '.testLogger' object\n\n")

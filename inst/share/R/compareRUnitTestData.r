@@ -15,7 +15,7 @@
 ##  along with this program; if not, write to the Free Software
 ##  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 
-##  $Id: compareRUnitTestData.r,v 1.4 2009/11/04 16:52:47 burgerm Exp $
+##  $Id$
 
 compare <- function(td1, td2, tolerance=100) {
   ##@bdescr

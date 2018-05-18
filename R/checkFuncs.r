@@ -14,7 +14,7 @@
 ##  along with this program; if not, write to the Free Software
 ##  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 
-##  $Id: checkFuncs.r,v 1.24 2009/11/05 18:57:56 burgerm Exp $
+##  $Id$
 
 
 checkEquals <- function(target, current, msg="",

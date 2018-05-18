@@ -14,7 +14,7 @@
 %%  along with this program; if not, write to the Free Software
 %%  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 
-%%  $Id: RUnit-intro.Rd,v 1.6 2009/11/05 19:32:48 burgerm Exp $
+%%  $Id$
 
 \encoding{latin1}
 \name{RUnit}

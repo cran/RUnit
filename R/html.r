@@ -14,7 +14,7 @@
 ##  along with this program; if not, write to the Free Software
 ##  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 
-##  $Id: html.r,v 1.10 2009/11/04 17:00:39 burgerm Exp $
+##  $Id$
 
 
 writeRaw <- function(htmlStr,htmlFile,append=TRUE)
