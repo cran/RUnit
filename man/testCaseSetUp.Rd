@@ -16,7 +16,7 @@
 
 %%  $Id$
 
-\encoding{latin1}
+\encoding{utf8}
 \name{.setUp}
 \alias{.setUp}
 \alias{.tearDown}
@@ -43,7 +43,7 @@
 }
     
 \author{
-Thomas \enc{König}{Koenig}, Klaus \enc{Jünemann}{Juenemann} 
+Thomas \enc{KÃ¶nig}{Koenig}, Klaus \enc{JÃ¼nemann}{Juenemann}
 \ifelse{html}{\out{&amp;}}{&} Matthias Burger}
 
 \seealso{

@@ -1,6 +1,6 @@
 Package: RUnit
-Version: 0.4.32
-Date: 2018-05-07
+Version: 0.4.33
+Date: 2024-02-09
 Title: R Unit Test Framework
 Author: Matthias Burger <burgerm@users.sourceforge.net>, Klaus
         Juenemann <k.junemann@gmx.net>, Thomas Koenig
@@ -15,6 +15,6 @@ Description: R functions implementing a standard Unit Testing
         generation tools.
 License: GPL-2
 NeedsCompilation: no
-Packaged: 2018-05-18 16:00:38 UTC; m044910
+Packaged: 2024-02-22 17:11:58 UTC; m044910
 Repository: CRAN
-Date/Publication: 2018-05-18 16:32:53 UTC
+Date/Publication: 2024-02-22 17:50:02 UTC

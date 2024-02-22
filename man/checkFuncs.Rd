@@ -16,7 +16,7 @@
 
 %%  $Id$
 
-\encoding{latin1}
+\encoding{utf8}
 \name{checkFuncs}
 \alias{checkEquals}
 \alias{checkEqualsNumeric}
@@ -125,7 +125,7 @@ DEACTIVATED(msg)
 
 
 \author{
-Thomas \enc{König}{Koenig}, Klaus \enc{Jünemann}{Juenemann} 
+Thomas \enc{KÃ¶nig}{Koenig}, Klaus \enc{JÃ¼nemann}{Juenemann}
 \ifelse{html}{\out{&amp;}}{&} Matthias Burger}
 
 \seealso{

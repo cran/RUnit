@@ -2,7 +2,6 @@
 
 [![CRAN_Status_Badge](https://www.r-pkg.org/badges/version/RUnit)](https://CRAN.R-project.org/package=RUnit)
 [![CRAN Downloads](https://cranlogs.r-pkg.org/badges/RUnit)](https://CRAN.R-project.org/package=RUnit)
-[![Travis-CI Build Status](https://travis-ci.org/romanzenka/RUnit.svg?branch=master)](https://travis-ci.org/romanzenka/RUnit)
 
 RUnit is a testing package for R code, inspired by the xUnit family of testing tools. 
 
@@ -27,8 +26,8 @@ This would run the actual tests stored in the packages `inst/tests` subdirectory
     # Which functions to run. Have to start with 'test.'
     testFunctionRegexp = "^test.+"
 
-    # Path to the unit tests folder in the package
-    dir <- system.file(subdir, package=pkgname)
+    # Path to the unit tests folder in the package (assuming "inst/tests" here)
+    dir <- system.file("tests", package=pkgname)
   
     # Define RUnit test suite
     suite <- defineTestSuite(name=paste(pkgname, "RUnit Tests"),

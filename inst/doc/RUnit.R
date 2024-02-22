@@ -43,7 +43,7 @@
 ## 
 ## resTrack <- track$getTrackInfo(); ## get the result of Code Inspector (a list)
 ## 
-## printHTML.trackInfo(resTrack) ; ## create HTML sites
+## printHTML(resTrack, baseDir=tempdir()) ; ## create HTML sites
 
 
 ###################################################
